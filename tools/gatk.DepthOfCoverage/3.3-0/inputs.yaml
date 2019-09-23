@@ -1,0 +1,8 @@
+reference_sequence: { class: File, path: /ifs/depot/pi/resources/genomes/GRCh37/fasta/b37.fasta }
+java_temp: /scratch
+read_filter: ["BadCigar"]
+out: foo_tumor.rg.md.abra.printreads_FP_base_counts.txt
+input_file: { class: File, path: /ifs/work/pi/roslin-pipelines/juno/roslin-variant/setup/examples/data/alignment/foo_tumor.Group0.rg.md.abra.printreads.bam }
+intervals: { class: File, path: /ifs/depot/pi/resources/roslin_resources/targets/IMPACT468/b37/FP_tiling_intervals.list }
+minBaseQuality: "3"
+minMappingQuality: "10"
