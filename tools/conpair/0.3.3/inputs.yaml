@@ -1,7 +1,0 @@
-bam: { class: File, path: /ifs/work/pi/roslin-pipelines/juno/roslin-variant/setup/examples/data/alignment/foo_tumor.Group0.rg.md.abra.printreads.bam }
-java_temp: /tmp
-java_xmx: ['24g']
-ref: { class: File, path: /ifs/depot/pi/resources/genomes/GRCh37/fasta/b37.fasta }
-markers_bed: "/usr/bin/conpair/data/markers/GRCh37.autosomes.phase3_shapeit2_mvncall_integrated.20130502.SNV.genotype.sselect_v4_MAF_0.4_LD_0.8.bed"
-outfile: "foo_tumor.rg.md.abra.printreads.pileup"
-gatk: "/usr/bin/gatk.jar"
