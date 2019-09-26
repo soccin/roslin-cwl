@@ -49,7 +49,11 @@ inputs:
   directories:
     type:
       type: array
-      items: Directory
+      items:
+        - Directory
+        - string
+        - 'null'
+
 
 outputs:
 
@@ -63,11 +67,14 @@ expression: |
   ${
     var output_files = [];
 
-    for (var i = 0; i < inputs.directories.length; i++) {
-       for (var j = 0; j < inputs.directories[i].listing.length; j++) {
+    var input_directories = inputs.directories.filter(single_file => String(single_file).toUpperCase() != 'NONE');
+    for (var i = 0; i < input_directories.length; i++) {
+      for (var j = 0; j < inputs.directories[i].listing.length; j++) {
            var item = inputs.directories[i].listing[j];
-           output_files.push(item);
-       }
+           if(item){
+             output_files.push(item);
+           }
+      }
     }
 
     return {

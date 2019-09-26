@@ -49,13 +49,19 @@ inputs:
   files:
     type:
       type: array
-      items: File
+      items:
+        - File
+        - string
+        - 'null'
     default: []
 
   directories:
     type:
       type: array
-      items: Directory
+      items:
+        - Directory
+        - string
+        - 'null'
     default: []
 
 outputs:
@@ -72,11 +78,13 @@ expression: |
       var output_file_list = [];
       for (var i = 0; i < input_file_list.length; i++) {
         var input_file = input_file_list[i];
-        if ( input_file["class"] == "File" ){
-          output_file_list.push(input_file);
-        }
-        else if ( input_file["class"] == "Directory" ){
-          output_file_list = output_file_list.concat(addDirectory([input_file]));
+        if(input_file){
+          if ( input_file["class"] == "File" ){
+            output_file_list.push(input_file);
+          }
+          else if ( input_file["class"] == "Directory" ){
+            output_file_list = output_file_list.concat(addDirectory([input_file]));
+          }
         }
       }
       return output_file_list;
@@ -87,7 +95,9 @@ expression: |
       for (var i = 0; i < input_directory_list.length; i++) {
          for (var j = 0; j < input_directory_list[i].listing.length; j++) {
              var item = input_directory_list[i].listing[j];
-             output_file_list = output_file_list.concat(addFile([item]))
+             if(item){
+              output_file_list = output_file_list.concat(addFile([item]));
+             }
          }
       }
       return output_file_list;
@@ -96,8 +106,11 @@ expression: |
     var output_files = [];
     var output_files_trimmed = [];
     var output_file_basename_dict = {};
-    output_files = output_files.concat(addFile(inputs.files));
-    output_files = output_files.concat(addDirectory(inputs.directories));
+    var input_files = inputs.files.filter(single_file => String(single_file).toUpperCase() != 'NONE');
+    var input_directories = inputs.directories.filter(single_file => String(single_file).toUpperCase() != 'NONE');
+    output_files = output_files.concat(addFile(input_files));
+    output_files = output_files.concat(addDirectory(input_directories));
+
 
     for (var i = 0; i < output_files.length; i++) {
       var output_file =  output_files[i];
