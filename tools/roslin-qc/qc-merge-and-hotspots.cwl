@@ -35,6 +35,7 @@ requirements:
   ScatterFeatureRequirement: {}
   SubworkflowFeatureRequirement: {}
   InlineJavascriptRequirement: {}
+  StepInputExpressionRequirement: {}
 
 inputs:
 

@@ -98,7 +98,6 @@ expression: |
     var output_file_basename_dict = {};
     output_files = output_files.concat(addFile(inputs.files));
     output_files = output_files.concat(addDirectory(inputs.directories));
-    console.log(output_files);
 
     for (var i = 0; i < output_files.length; i++) {
       var output_file =  output_files[i];
