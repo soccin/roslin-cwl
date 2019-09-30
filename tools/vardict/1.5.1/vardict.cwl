@@ -1,34 +1,6 @@
-$namespaces:
-  dct: http://purl.org/dc/terms/
-  doap: http://usefulinc.com/ns/doap#
-  foaf: http://xmlns.com/foaf/0.1/
-$schemas:
-- http://dublincore.org/2012/06/14/dcterms.rdf
-- http://xmlns.com/foaf/spec/20140114.rdf
-- http://usefulinc.com/ns/doap#
-class: Workflow
+#!/usr/bin/env cwl-runner
 cwlVersion: v1.0
-dct:contributor:
-- class: foaf:Organization
-  foaf:member:
-  - class: foaf:Person
-    foaf:mbox: mailto:ivkovics@mskcc.org
-    foaf:name: Sinisa Ivkovic,
-  foaf:name: MSKCC
-dct:creator:
-- class: foaf:Organization
-  foaf:member:
-  - class: foaf:Person
-    foaf:mbox: mailto:ivkovics@mskcc.org
-    foaf:name: Sinisa Ivkovic,
-  foaf:name: MSKCC
-doap:release:
-- class: doap:Version
-  doap:name: Vardict
-  doap:revision: 1.5.1
-- class: doap:Version
-  doap:name: MSK-App
-  doap:revision: 1.0.0
+class: Workflow
 id: vardict
 inputs:
 - id: bedfile
@@ -124,12 +96,12 @@ label: vardict
 outputs:
 - id: output
   outputSource:
-  - cmo_vardict_1/output
+  - vardict_1/output
   type: File
 requirements:
 - class: InlineJavascriptRequirement
 steps:
-- id: cmo_vardict
+- id: vardict
   in:
   - id: B
     source: B
@@ -218,7 +190,7 @@ steps:
   out:
   - id: output
   run: ./vardict_app.cwl
-- id: cmo_vardict_1
+- id: vardict_1
   in:
   - id: N
     source: N
@@ -236,7 +208,7 @@ steps:
 - id: testsomatic
   in:
   - id: input_vardict
-    source: cmo_vardict/output
+    source: vardict/output
   label: testsomatic
   out:
   - id: output_var

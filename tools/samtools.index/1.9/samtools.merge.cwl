@@ -1,3 +1,4 @@
+#!/usr/bin/env cwl-runner
 class: CommandLineTool
 cwlVersion: v1.0
 
@@ -27,9 +28,3 @@ requirements:
   - class: DockerRequirement
     dockerPull: 'mjblow/samtools-1.9:latest'
   - class: InlineJavascriptRequirement
-'dct:contributor':
-  'foaf:mbox': 'mailto:bolipatc@mskcc.org'
-  'foaf:name': C. Allan Bolipata
-'dct:creator':
-  'foaf:mbox': 'mailto:bolipatc@mskcc.org'
-  'foaf:name': C. Allan Bolipata

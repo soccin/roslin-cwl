@@ -1,39 +1,4 @@
 #!/usr/bin/env cwl-runner
-
-$namespaces:
-  dct: http://purl.org/dc/terms/
-  foaf: http://xmlns.com/foaf/0.1/
-  doap: http://usefulinc.com/ns/doap#
-
-$schemas:
-- http://dublincore.org/2012/06/14/dcterms.rdf
-- http://xmlns.com/foaf/spec/20140114.rdf
-- http://usefulinc.com/ns/doap#
-
-doap:release:
-- class: doap:Version
-  doap:name: conpair-pileup-pairing.cwl
-  doap:revision: 0.2
-- class: doap:Version
-  doap:name: cwl-wrapper
-  doap:revision: 1.0.0
-
-dct:creator:
-- class: foaf:Organization
-  foaf:name: Memorial Sloan Kettering Cancer Center
-  foaf:member:
-  - class: foaf:Person
-    foaf:name: Zuojian Tang
-    foaf:mbox: mailto:tangz@mskcc.org
-
-dct:contributor:
-- class: foaf:Organization
-  foaf:name: Memorial Sloan Kettering Cancer Center
-  foaf:member:
-  - class: foaf:Person
-    foaf:name: Zuojian Tang
-    foaf:mbox: mailto:tangz@mskcc.org
-
 cwlVersion: v1.0
 
 class: ExpressionTool
@@ -64,13 +29,13 @@ outputs:
         type: array
         items: File
 
-expression: '${ 
+expression: '${
 function dict_files(pileup_data) {
     var d = {};
     for (var i = 0; i < pileup_data.length; i++){
         var fname = pileup_data[i].basename;
         if (!(fname in d)){
-                d[fname] = {}; 
+                d[fname] = {};
                 d[fname] = {"path": pileup_data[i]};
         };
     };
@@ -83,7 +48,7 @@ function pair(d1, d2){
             var p1 = d1[key1];
             for (var key2 in d2){
                 var p2 = d2[key2];
-              results.push([p1,p2]);  
+              results.push([p1,p2]);
         };
     };
     return results;

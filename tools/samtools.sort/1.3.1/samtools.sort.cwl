@@ -1,7 +1,6 @@
+#!/usr/bin/env cwl-runner
 class: CommandLineTool
 cwlVersion: v1.0
-$namespaces:
-  sbg: 'https://www.sevenbridges.com/'
 baseCommand:
   - samtools
   - sort
@@ -119,16 +118,5 @@ requirements:
     ramMin: 32000
     coresMin: 4
   - class: DockerRequirement
-    dockerPull: 'quay.io/cancercollaboratory/dockstore-tool-samtools-sort:1.0'
+    dockerPull: mskcc/roslin-variant-samtools:1.3.1
   - class: InlineJavascriptRequirement
-'dct:contributor':
-  'foaf:mbox': 'mailto:ayang@oicr.on.ca'
-  'foaf:name': Andy Yang
-'dct:creator':
-  '@id': 'http://orcid.org/0000-0001-9102-5681'
-  'foaf:mbox': 'mailto:Andrey.Kartashov@cchmc.org'
-  'foaf:name': Andrey Kartashov
-'dct:description': >-
-  Developed at Cincinnati Children���s Hospital Medical Center for the CWL
-  consortium http://commonwl.org/ Original URL:
-  https://github.com/common-workflow-language/workflows

@@ -1,45 +1,14 @@
-$namespaces:
-  dct: http://purl.org/dc/terms/
-  doap: http://usefulinc.com/ns/doap#
-  foaf: http://xmlns.com/foaf/0.1/
-$schemas:
-- http://dublincore.org/2012/06/14/dcterms.rdf
-- http://xmlns.com/foaf/spec/20140114.rdf
-- http://usefulinc.com/ns/doap#
+#!/usr/bin/env cwl-runner
+cwlVersion: v1.0
+class: CommandLineTool
+baseCommand:
+- perl
+- /usr/bin/vardict/var2vcf_paired.pl
 arguments:
 - position: 0
   prefix: -N
   valueFrom: "${\n    return inputs.N + \"|\" + inputs.N2;\n}"
-baseCommand:
-- perl
-- /usr/bin/vardict/var2vcf_paired.pl
-class: CommandLineTool
-cwlVersion: v1.0
-dct:contributor:
-- class: foaf:Organization
-  foaf:member:
-  - class: foaf:Person
-    foaf:mbox: mailto:ivkovics@mskcc.org
-    foaf:name: Sinisa Ivkovic,
-  foaf:name: MSKCC
-dct:creator:
-- class: foaf:Organization
-  foaf:member:
-  - class: foaf:Person
-    foaf:mbox: mailto:ivkovics@mskcc.org
-    foaf:name: Sinisa Ivkovic,
-  foaf:name: MSKCC
-doap:release:
-- class: doap:Version
-  doap:name: VarToVcf
-  doap:revision: 1.5.1
-- class: doap:Version
-  doap:name: MSK-App
-  doap:revision: 1.0.0
-doc: 'None
-
-  '
-id: cmo_vardict
+id: vardict_var2vcf
 inputs:
 - doc: Indicate the chromosome names are just numbers, such as 1, 2, not chr1, chr2
   id: C

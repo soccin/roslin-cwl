@@ -1,11 +1,6 @@
-$namespaces:
-  dct: http://purl.org/dc/terms/
-  doap: http://usefulinc.com/ns/doap#
-  foaf: http://xmlns.com/foaf/0.1/
-$schemas:
-- http://dublincore.org/2012/06/14/dcterms.rdf
-- http://xmlns.com/foaf/spec/20140114.rdf
-- http://usefulinc.com/ns/doap#
+#!/usr/bin/env cwl-runner
+cwlVersion: v1.0
+class: CommandLineTool
 arguments:
 - position: 1
   prefix: -b
@@ -14,35 +9,7 @@ arguments:
   prefix: -N
   valueFrom: "${\n    if (inputs.N2)\n        return [inputs.N, inputs.N2];\n    else\n\
     \        return inputs.N;\n}"
-baseCommand:
-- /usr/bin/vardict/bin/VarDict
-class: CommandLineTool
-cwlVersion: v1.0
-dct:contributor:
-- class: foaf:Organization
-  foaf:member:
-  - class: foaf:Person
-    foaf:mbox: mailto:ivkovics@mskcc.org
-    foaf:name: Sinisa Ivkovic,
-  foaf:name: MSKCC
-dct:creator:
-- class: foaf:Organization
-  foaf:member:
-  - class: foaf:Person
-    foaf:mbox: mailto:ivkovics@mskcc.org
-    foaf:name: Sinisa Ivkovic,
-  foaf:name: MSKCC
-doap:release:
-- class: doap:Version
-  doap:name: Vardict
-  doap:revision: 1.5.1
-- class: doap:Version
-  doap:name: MSK-App
-  doap:revision: 1.0.0
-doc: 'None
-
-  '
-id: cmo_vardict
+id: vardict
 inputs:
 - doc: The minimum
   id: B
