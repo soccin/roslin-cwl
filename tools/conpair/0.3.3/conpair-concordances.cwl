@@ -2,7 +2,9 @@
 cwlVersion: cwl:v1.0
 
 class: CommandLineTool
-baseCommand: [concordance]
+baseCommand:
+  - python
+  - /usr/bin/conpair/scripts/verify_concordances.py
 
 id: conpair-concordance
 requirements:

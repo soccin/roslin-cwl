@@ -2,7 +2,7 @@
 class: CommandLineTool
 cwlVersion: v1.0
 baseCommand:
-  - samtools
+  - /usr/bin/samtools
   - sort
 id: samtools-sort
 inputs:

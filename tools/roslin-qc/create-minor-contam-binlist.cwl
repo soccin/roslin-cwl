@@ -2,7 +2,10 @@
 cwlVersion: v1.0
 
 class: CommandLineTool
-baseCommand: [create_minor_contam_binlist]
+baseCommand:
+  - python
+  - /usr/bin/create_minor_contam_binlist.py
+
 id: create-minor-contam-binlist
 
 requirements:

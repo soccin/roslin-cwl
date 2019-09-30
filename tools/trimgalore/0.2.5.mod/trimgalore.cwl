@@ -1,6 +1,7 @@
 #!/usr/bin/env cwl-runner
 cwlVersion: v1.0
 class: CommandLineTool
+baseCommand: [/usr/bin/trim_galore]
 id: trimgalore
 
 requirements:

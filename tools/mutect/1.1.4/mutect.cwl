@@ -4,9 +4,15 @@ cwlVersion: v1.0
 class: CommandLineTool
 id: mutect
 
+baseCommand:
+  - java
 arguments:
-- valueFrom: "-jar -T MuTect"
+- valueFrom: "/usr/bin/mutect.jar"
+  prefix: "-jar"
   position: 1
+  shellQuote: false
+- valueFrom: "-Xmx48g -Xms256m -XX:-UseGCOverheadLimit"
+  position: 0
   shellQuote: false
 
 requirements:

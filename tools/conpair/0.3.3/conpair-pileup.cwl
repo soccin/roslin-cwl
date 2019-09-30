@@ -2,7 +2,9 @@
 cwlVersion: v1.0
 
 class: CommandLineTool
-baseCommand: [pileup]
+baseCommand:
+  - python
+  - /usr/bin/conpair/scripts/run_gatk_pileup_for_sample.py
 
 id: conpair-pileup
 

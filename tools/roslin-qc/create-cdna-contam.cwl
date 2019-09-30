@@ -2,7 +2,9 @@
 cwlVersion: v1.0
 
 class: CommandLineTool
-baseCommand: [create_cdna_contam]
+baseCommand:
+  - python
+  - /usr/bin/create_cdna_contam.py
 id: create-cdna-contam
 
 requirements:

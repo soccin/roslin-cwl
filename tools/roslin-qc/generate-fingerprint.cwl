@@ -10,7 +10,10 @@ requirements:
     dockerPull: mskcc/roslin-variant-roslin-qc:0.6.1
 
 class: CommandLineTool
-baseCommand: [analyze_fingerprint]
+baseCommand:
+  - python
+  - /usr/bin/analyze_fingerprint.py
+
 id: generate-fingerprint
 inputs:
   files:

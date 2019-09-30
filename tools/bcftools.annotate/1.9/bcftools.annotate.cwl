@@ -2,7 +2,9 @@
 cwlVersion: v1.0
 
 class: CommandLineTool
-baseCommand: [annotate]
+baseCommand:
+  - /usr/bin/bcftools
+  - annotate
 id: bcftools-annotate
 
 requirements:

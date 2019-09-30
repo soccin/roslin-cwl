@@ -2,7 +2,9 @@
 cwlVersion: v1.0
 
 class: CommandLineTool
-baseCommand: [concat]
+baseCommand:
+  - /usr/bin/bcftools
+  - concat
 id: bcftools-concat
 
 requirements:

@@ -2,7 +2,9 @@
 cwlVersion: v1.0
 
 class: CommandLineTool
-baseCommand: [filter]
+baseCommand:
+  - /usr/local/bin/delly
+  - filter
 
 id: delly-filter
 requirements:

@@ -2,7 +2,9 @@
 cwlVersion: v1.0
 
 class: CommandLineTool
-baseCommand: [vardict]
+baseCommand:
+  - python
+  - /usr/bin/basicfiltering/filter_vardict.py
 id: basic-filtering-vardict
 requirements:
   InlineJavascriptRequirement: {}

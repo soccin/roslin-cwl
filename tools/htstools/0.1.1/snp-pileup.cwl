@@ -2,7 +2,8 @@
 cwlVersion: v1.0
 
 class: CommandLineTool
-baseCommand: [snp-pileup]
+baseCommand:
+  - /usr/bin/snp-pileup
 id: htstools-snp-pileup
 
 requirements:

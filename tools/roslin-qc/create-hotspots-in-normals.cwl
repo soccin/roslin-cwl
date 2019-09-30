@@ -2,7 +2,10 @@
 cwlVersion: v1.0
 
 class: CommandLineTool
-baseCommand: [create_hotspots_in_normal]
+baseCommand:
+  - python
+  - /usr/bin/create_hotspots_in_normals.py
+
 id: create-hotspots-in-normal
 
 requirements:

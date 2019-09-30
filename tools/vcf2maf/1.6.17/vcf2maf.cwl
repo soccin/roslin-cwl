@@ -2,7 +2,9 @@
 cwlVersion: v1.0
 
 class: CommandLineTool
-baseCommand: [vcf2maf.pl]
+baseCommand:
+  - perl
+  - /usr/bin/vcf2maf/vcf2maf.pl
 
 label: vcf2maf
 

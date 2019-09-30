@@ -1,6 +1,8 @@
 #!/usr/bin/env cwl-runner
 cwlVersion: v1.0
 class: CommandLineTool
+baseCommand:
+- /usr/bin/vardict/bin/VarDict
 arguments:
 - position: 1
   prefix: -b

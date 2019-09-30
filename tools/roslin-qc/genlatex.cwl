@@ -12,7 +12,10 @@ requirements:
     dockerPull: mskcc/roslin-variant-roslin-qc:0.6.1
 
 class: CommandLineTool
-baseCommand: [genlatex]
+baseCommand:
+  - python
+  - /usr/bin/genlatex.py
+
 id: genlatex
 
 inputs:

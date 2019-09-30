@@ -2,7 +2,9 @@
 cwlVersion: v1.0
 
 class: CommandLineTool
-baseCommand: [mutect]
+baseCommand:
+  - python
+  - /usr/bin/basicfiltering/filter_mutect.py
 id: basic-filtering-mutect
 requirements:
   InlineJavascriptRequirement: {}

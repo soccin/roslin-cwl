@@ -10,7 +10,10 @@ requirements:
     dockerPull: mskcc/roslin-variant-roslin-qc:0.6.1
 
 class: CommandLineTool
-baseCommand: [merge_insert_size_histograms]
+baseCommand:
+  - python
+  - /usr/bin/merge_insert_size_histograms.py
+
 id: merge-insert-size-histograms
 stdout: $(inputs.outfile_name)
 inputs:

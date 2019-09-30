@@ -2,7 +2,9 @@
 cwlVersion: v1.0
 
 class: CommandLineTool
-baseCommand: [merge]
+baseCommand:
+  - /usr/local/bin/delly
+  - merge
 
 id: delly-merge
 

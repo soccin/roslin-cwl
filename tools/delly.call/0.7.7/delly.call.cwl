@@ -2,7 +2,9 @@
 cwlVersion: v1.0
 
 class: CommandLineTool
-baseCommand: [call]
+baseCommand:
+  - /usr/local/bin/delly
+  - call
 
 id: delly-call
 

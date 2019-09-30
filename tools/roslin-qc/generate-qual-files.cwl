@@ -10,7 +10,10 @@ requirements:
     dockerPull: mskcc/roslin-variant-roslin-qc:0.6.1
 
 class: CommandLineTool
-baseCommand: [merge_mean_quality_histograms]
+baseCommand:
+  - python
+  - /usr/bin/merge_mean_quality_histograms.py
+
 id: generate-qual-files
 inputs:
   files:

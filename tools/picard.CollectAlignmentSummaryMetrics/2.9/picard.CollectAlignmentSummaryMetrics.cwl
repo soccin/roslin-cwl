@@ -4,10 +4,19 @@ cwlVersion: v1.0
 class: CommandLineTool
 id: picard-CollectAlignmentSummaryMetrics
 
-
+baseCommand:
+  - java
 arguments:
-- valueFrom: "-jar CollectAlignmentSummaryMetrics"
+- valueFrom: "/usr/bin/picard-tools/picard.jar"
+  prefix: "-jar"
   position: 1
+  shellQuote: false
+- valueFrom: "CollectAlignmentSummaryMetrics"
+  position: 1
+  shellQuote: false
+- valueFrom: "-Xms256m -Xmx30g -XX:-UseGCOverheadLimit"
+  position: 0
+  shellQuote: false
 
 requirements:
   InlineJavascriptRequirement: {}
@@ -17,17 +26,10 @@ requirements:
   DockerRequirement:
     dockerPull: mskcc/roslin-variant-picard:2.9
 
-
 doc: |
   None
 
 inputs:
-
-  java_args:
-    type: string
-    default: "-Xms256m -Xmx30g -XX:-UseGCOverheadLimit"
-    inputBinding:
-      position: 0
 
   java_temp:
     type: string

@@ -4,6 +4,10 @@ cwlVersion: v1.0
 class: CommandLineTool
 id: ngs-filters
 
+baseCommand:
+  - python
+  - /usr/bin/ngs-filters/run_ngs-filters.py
+
 requirements:
   InlineJavascriptRequirement: {}
   ResourceRequirement:

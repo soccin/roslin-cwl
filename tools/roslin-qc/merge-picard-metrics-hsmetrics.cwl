@@ -10,7 +10,10 @@ requirements:
     dockerPull: mskcc/roslin-variant-roslin-qc:0.6.1
 
 class: CommandLineTool
-baseCommand: [merge_picard_metrics]
+baseCommand:
+  - python
+  - /usr/bin/merge_picard_metrics.py
+
 id: merge-picard-metrics-hsmetrics
 stdout: $(inputs.outfile_name)
 inputs:

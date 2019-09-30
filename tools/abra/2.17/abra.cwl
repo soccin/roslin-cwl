@@ -4,9 +4,14 @@ cwlVersion: v1.0
 class: CommandLineTool
 id: abra
 
+baseCommand:
+  - java
+
 arguments:
-- valueFrom: "-jar"
+- valueFrom: "/usr/bin/abra.jar"
+  prefix: "-jar"
   position: 1
+  shellQuote: false
 
 requirements:
   InlineJavascriptRequirement: {}

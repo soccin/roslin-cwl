@@ -2,7 +2,7 @@
 class: CommandLineTool
 cwlVersion: v1.0
 baseCommand:
-  - samtools
+  - /usr/bin/samtools
   - view
 id: samtools-view
 inputs:
@@ -420,5 +420,5 @@ requirements:
     ramMin: 32000
     coresMin: 4
   - class: DockerRequirement
-    dockerPull: 'quay.io/cancercollaboratory/dockstore-tool-samtools-view:1.0'
+    dockerPull: mskcc/roslin-variant-samtools:1.3.1
   - class: InlineJavascriptRequirement

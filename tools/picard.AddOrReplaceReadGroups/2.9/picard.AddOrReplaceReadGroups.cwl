@@ -4,9 +4,19 @@ cwlVersion: v1.0
 class: CommandLineTool
 id: picard-AddOrReplaceReadGroups
 
+baseCommand:
+  - java
 arguments:
-- valueFrom: "-jar AddOrReplaceReadGroups"
+- valueFrom: "/usr/bin/picard-tools/picard.jar"
+  prefix: "-jar"
   position: 1
+  shellQuote: false
+- valueFrom: "AddOrReplaceReadGroups"
+  position: 1
+  shellQuote: false
+- valueFrom: "-Xms256m -Xmx30g -XX:-UseGCOverheadLimit"
+  position: 0
+  shellQuote: false
 
 requirements:
   InlineJavascriptRequirement: {}
@@ -20,12 +30,6 @@ doc: |
   None
 
 inputs:
-
-  java_args:
-    type: string
-    default: "-Xms256m -Xmx30g -XX:-UseGCOverheadLimit"
-    inputBinding:
-      position: 0
 
   java_temp:
     type: string

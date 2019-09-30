@@ -2,7 +2,9 @@
 cwlVersion: v1.0
 
 class: CommandLineTool
-baseCommand: [complex]
+baseCommand:
+  - python
+  - /usr/bin/basicfiltering/filter_complex.py
 id: basic-filtering-complex
 requirements:
   InlineJavascriptRequirement: {}

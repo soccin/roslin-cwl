@@ -2,7 +2,7 @@
 cwlVersion: v1.0
 
 class: CommandLineTool
-baseCommand: [tabix]
+baseCommand: [/usr/local/bin/tabix]
 id: tabix
 
 requirements:

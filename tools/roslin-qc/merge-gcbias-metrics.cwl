@@ -10,7 +10,9 @@ requirements:
     dockerPull: mskcc/roslin-variant-roslin-qc:0.6.1
 
 class: CommandLineTool
-baseCommand: [merge_gc_bias_metrics]
+baseCommand:
+  - python
+  - /usr/bin/merge_gc_bias_metrics.py
 id: merge-gcbias-metrics
 stdout: $(inputs.outfile_name)
 inputs:

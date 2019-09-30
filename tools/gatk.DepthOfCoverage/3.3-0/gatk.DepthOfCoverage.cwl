@@ -48,9 +48,19 @@ cwlVersion: v1.0
 class: CommandLineTool
 id: gatk-DepthOfCoverage
 
+baseCommand:
+  - java
 arguments:
-- valueFrom: "-jar -T DepthOfCoverage"
+- valueFrom: "/usr/bin/gatk.jar"
+  prefix: "-jar"
   position: 1
+  shellQuote: false
+- valueFrom: "DepthOfCoverage"
+  prefix: "-T"
+  position: 1
+  shellQuote: false
+- valueFrom: "-Xmx48g -Xms256m -XX:-UseGCOverheadLimit"
+  position: 0
   shellQuote: false
 
 requirements:
@@ -65,13 +75,6 @@ doc: |
   None
 
 inputs:
-
-  java_args:
-    type: string
-    default: "-Xmx48g -Xms256m -XX:-UseGCOverheadLimit"
-    inputBinding:
-      position: 0
-      shellQuote: false
 
   java_temp:
     type: string

@@ -10,7 +10,10 @@ requirements:
     dockerPull: mskcc/roslin-variant-roslin-qc:0.6.1
 
 class: CommandLineTool
-baseCommand: [merge_cut_adapt_stats]
+baseCommand:
+  - python
+  - /usr/bin/merge_cut_adapt_stats.py
+
 id: generate-cutadapt-summary.cwl
 inputs:
 

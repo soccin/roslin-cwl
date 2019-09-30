@@ -12,7 +12,10 @@ requirements:
     dockerPull: mskcc/roslin-variant-roslin-qc:0.6.1
 
 class: CommandLineTool
-baseCommand: [stitch_pdf]
+baseCommand:
+  - java
+  - -jar
+  - /usr/bin/QCPDF.jar
 id: stitch-pdf
 
 inputs:

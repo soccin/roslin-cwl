@@ -12,7 +12,9 @@ requirements:
     dockerPull: mskcc/roslin-variant-roslin-qc:0.6.1
 
 class: CommandLineTool
-baseCommand: [qc_summary]
+baseCommand:
+  - Rscript
+  - /usr/bin/qc_summary.R
 id: generate-images
 
 inputs:
