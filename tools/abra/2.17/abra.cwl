@@ -12,6 +12,9 @@ arguments:
   prefix: "-jar"
   position: 1
   shellQuote: false
+- valueFrom: "-Xms$(parseInt(runtime.ram)/1900)g -Xmx$(parseInt(runtime.ram)/950)g"
+  position: 0
+  shellQuote: false
 
 requirements:
   InlineJavascriptRequirement: {}
@@ -26,12 +29,6 @@ doc: |
   None
 
 inputs:
-
-  java_args:
-    type: string
-    default: "-Xmx36g"
-    inputBinding:
-      position: 0
 
   abra_ram_min:
     type: int

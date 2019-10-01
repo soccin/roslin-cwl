@@ -14,7 +14,7 @@ arguments:
 - valueFrom: "CollectHsMetrics"
   position: 1
   shellQuote: false
-- valueFrom: "-Xms256m -Xmx30g -XX:-UseGCOverheadLimit"
+- valueFrom: "-Xms$(parseInt(runtime.ram)/1900)g -Xmx$(parseInt(runtime.ram)/950)g -XX:-UseGCOverheadLimit"
   position: 0
   shellQuote: false
 

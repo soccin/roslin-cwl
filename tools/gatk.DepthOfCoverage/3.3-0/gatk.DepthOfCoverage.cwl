@@ -14,7 +14,7 @@ arguments:
   prefix: "-T"
   position: 1
   shellQuote: false
-- valueFrom: "-Xmx48g -Xms256m -XX:-UseGCOverheadLimit"
+- valueFrom: "-Xms$(parseInt(runtime.ram)/1900)g -Xmx$(parseInt(runtime.ram)/950)g -XX:-UseGCOverheadLimit"
   position: 0
   shellQuote: false
 
