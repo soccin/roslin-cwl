@@ -191,6 +191,7 @@ steps:
                 valueFrom: ${ return "86"; } # SVs have issues with vep 92 - moving to 86 for compatibility
             ref_fasta: ref_fasta
             ncbi_build: genome
+            tmp_dir: tmp_dir
             filter_vcf: exac_filter
             custom_enst: custom_enst
             normal_id: normal_sample_name
