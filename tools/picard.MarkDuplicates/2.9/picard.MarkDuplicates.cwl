@@ -14,7 +14,7 @@ arguments:
 - valueFrom: "MarkDuplicates"
   position: 1
   shellQuote: false
-- valueFrom: "-Xms$(parseInt(runtime.ram)/1900)g -Xmx$(parseInt(runtime.ram)/950)g -XX:-UseGCOverheadLimit"
+- valueFrom: "-Xms$(Math.round(parseInt(runtime.ram)/1910))G -Xmx$(Math.round(parseInt(runtime.ram)/955))G -XX:-UseGCOverheadLimit"
   position: 0
   shellQuote: false
 
