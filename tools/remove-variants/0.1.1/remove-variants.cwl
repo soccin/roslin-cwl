@@ -4,6 +4,10 @@ cwlVersion: v1.0
 class: CommandLineTool
 id: remove-variants
 
+baseCommand:
+  - python
+  - /usr/bin/remove_variants.py
+
 requirements:
   InlineJavascriptRequirement: {}
   ResourceRequirement:
