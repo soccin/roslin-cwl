@@ -11,7 +11,7 @@ requirements:
     ramMin: 32000
     coresMin: 2
   DockerRequirement:
-    dockerPull: mskcc/roslin-variant-cmo-utils:1.9.14
+    dockerPull: mskcc/roslin-variant-cmo-utils:1.9.15
 
 doc: |
   Fillout allele counts for a MAF file using GetBaseCountsMultiSample on BAMs

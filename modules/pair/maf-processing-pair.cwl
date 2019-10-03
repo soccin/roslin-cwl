@@ -103,7 +103,7 @@ steps:
         out: [maf]
 
     fillout_tumor_normal:
-        run: ../../tools/cmo-utils/1.9.14/cmo-fillout.cwl
+        run: ../../tools/cmo-utils/1.9.15/cmo-fillout.cwl
         in:
             pairing: pairing_file
             maf: remove_variants/maf
@@ -141,7 +141,7 @@ steps:
                     outputSource: fillout_curated_bams_step/fillout_out
             steps:
                 fillout_curated_bams_step:
-                    run: ../../tools/cmo-utils/1.9.14/cmo-fillout.cwl
+                    run: ../../tools/cmo-utils/1.9.15/cmo-fillout.cwl
                     in:
                         maf: maf
                         bams: curated_bams

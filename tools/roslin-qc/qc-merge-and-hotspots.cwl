@@ -166,7 +166,7 @@ steps:
     out: [ merged_mdmetrics, merged_hsmetrics, merged_hstmetrics, merged_insert_size_histograms, fingerprints_output, fingerprint_summary, minor_contam_output, qual_files_r, qual_files_o, cutadapt_summary ]
 
   hotspots_fillout:
-    run: ../cmo-utils/1.9.14/cmo-fillout.cwl
+    run: ../cmo-utils/1.9.15/cmo-fillout.cwl
     in:
       maf: hotspot_list_maf
       aa_bams: bams

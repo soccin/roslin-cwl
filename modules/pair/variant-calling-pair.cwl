@@ -95,12 +95,12 @@ outputs:
             - .tbi
 steps:
     normal_index:
-        run: ../../tools/cmo-utils/1.9.14/cmo-index.cwl
+        run: ../../tools/cmo-utils/1.9.15/cmo-index.cwl
         in:
             bam: normal_bam
         out: [bam_indexed]
     tumor_index:
-        run: ../../tools/cmo-utils/1.9.14/cmo-index.cwl
+        run: ../../tools/cmo-utils/1.9.15/cmo-index.cwl
         in:
             bam: tumor_bam
         out: [bam_indexed]

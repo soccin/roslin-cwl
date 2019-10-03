@@ -193,7 +193,7 @@ steps:
       reads_dir: flatten_dir/output_directory
     out: [r1,r2]
   chunking:
-    run: ../tools/cmo-utils/1.9.14/cmo-split-reads.cwl
+    run: ../tools/cmo-utils/1.9.15/cmo-split-reads.cwl
     in:
       fastq1:
         source: [get_sample_info/R1, consolidate_reads/r1]
