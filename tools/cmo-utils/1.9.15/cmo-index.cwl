@@ -24,5 +24,5 @@ outputs:
   bam_indexed:
     type: File
     outputBinding:
-      glob: $(inputs.tumor.basename)
+      glob: $(inputs.bam.basename)
     secondaryFiles: ["^.bai", ".bai"]
