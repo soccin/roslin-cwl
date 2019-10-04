@@ -108,7 +108,8 @@ inputs:
       inputBinding:
         prefix: LEVEL=
         separate: false
-        position: 2
+    inputBinding:
+      position: 2
 
   INCLUDE_DUPLICATES:
     type: ['null', boolean]

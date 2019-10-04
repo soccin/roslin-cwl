@@ -101,7 +101,8 @@ inputs:
       inputBinding:
         prefix: LEVEL=
         separate: false
-        position: 2
+    inputBinding:
+      position: 2
   BS:
     type: ['null', string]
     doc: Whether the SAM or BAM file consists of bisulfite sequenced reads. Default
