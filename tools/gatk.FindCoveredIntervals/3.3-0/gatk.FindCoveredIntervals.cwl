@@ -125,8 +125,9 @@ inputs:
       items: string
       inputBinding:
         prefix: --intervals
-        position: 2
         separate: true
+    inputBinding:
+      position: 2
     doc: One or more genomic intervals over which to operate
 
   excludeIntervals:

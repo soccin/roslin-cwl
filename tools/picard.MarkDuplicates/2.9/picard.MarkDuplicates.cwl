@@ -58,8 +58,9 @@ inputs:
       items: File
       inputBinding:
         prefix: I=
-        position: 2
         separate: false
+    inputBinding:
+      position: 2
 
   MAX_SEQS:
     type: ['null', string]

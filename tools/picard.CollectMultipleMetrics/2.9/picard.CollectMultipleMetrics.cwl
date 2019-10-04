@@ -75,8 +75,9 @@ inputs:
       items: string
       inputBinding:
         prefix: PROGRAM=
-        position: 2
         separate: false
+    inputBinding:
+      position: 2
     doc: List of metrics programs to apply during the pass through the SAM file. Possible
       values - {CollectAlignmentSummaryMetrics, CollectInsertSizeMetrics, QualityScoreDistribution,
       MeanQualityByCycle} This option may be specified 0 or more times. This option
