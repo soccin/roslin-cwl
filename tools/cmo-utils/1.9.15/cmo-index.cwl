@@ -11,6 +11,8 @@ requirements:
     coresMin: 1
   DockerRequirement:
     dockerPull: mskcc/roslin-variant-cmo-utils:1.9.15
+  InitialWorkDirRequirement:
+    listing: [ $(inputs.bam) ]
 
 inputs:
 
