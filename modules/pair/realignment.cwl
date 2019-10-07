@@ -247,6 +247,7 @@ steps:
                     in:
                       I: gatk_print_reads/out_bam
                       java_temp: tmp_dir
+                      REFERENCE_SEQUENCE: reference_sequence
                       PROGRAM:
                         valueFrom: ${return ["null","MeanQualityByCycle"]}
                       O:

@@ -59,6 +59,13 @@ inputs:
       position: 2
       separate: false
 
+  REFERENCE_SEQUENCE:
+    type: File
+    inputBinding:
+      prefix: REFERENCE_SEQUENCE=
+      separate: false
+      position: 2
+
   EXT:
     type: ['null', string]
     doc: Append the given file extension to all metric file names (ex. OUTPUT.insert_size_metrics.EXT).

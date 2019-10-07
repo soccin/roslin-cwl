@@ -60,6 +60,13 @@ inputs:
       position: 2
       separate: false
 
+  REFERENCE_SEQUENCE:
+    type: File
+    inputBinding:
+      prefix: REFERENCE_SEQUENCE=
+      separate: false
+      position: 2
+
   CHART:
     type: string
     doc: The PDF file to render the chart to. Required.
