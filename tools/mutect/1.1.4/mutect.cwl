@@ -34,13 +34,6 @@ doc: |
 
 inputs:
 
-  java_args:
-    type: string
-    default: "-Xmx48g -Xms256m -XX:-UseGCOverheadLimit"
-    inputBinding:
-      position: 0
-      shellQuote: false
-
   java_temp:
     type: string
     inputBinding:
