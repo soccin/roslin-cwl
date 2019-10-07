@@ -33,10 +33,15 @@ inputs:
       prefix: --type
 
   g:
-    type:
-    - 'null'
-    - File
-    - string
+    type: File
+    secondaryFiles:
+      - .amb
+      - .ann
+      - .bwt
+      - .pac
+      - .sa
+      - .fai
+      - ^.dict
     doc: genome fasta file
     inputBinding:
       prefix: --genome
