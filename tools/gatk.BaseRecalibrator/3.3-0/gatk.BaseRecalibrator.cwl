@@ -62,7 +62,8 @@ inputs:
       items: File
       inputBinding:
         prefix: --input_file
-        position: 2
+    inputBinding:
+      position: 2
     doc: Input file containing sequence data (SAM or BAM)
 
   read_buffer_size:

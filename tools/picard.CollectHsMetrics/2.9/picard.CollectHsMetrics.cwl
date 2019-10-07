@@ -102,7 +102,8 @@ inputs:
       inputBinding:
         prefix: LEVEL=
         separate: false
-        position: 2
+    inputBinding:
+      position: 2
 
   PER_TARGET_COVERAGE:
     type: ['null', string]
