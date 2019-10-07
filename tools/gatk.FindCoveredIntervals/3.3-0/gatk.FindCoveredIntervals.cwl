@@ -50,7 +50,6 @@ inputs:
     - 'null'
     - type: array
       items: string
-
     doc: Reads arguments from the specified file
     inputBinding:
       prefix: --arg_file
@@ -64,6 +63,7 @@ inputs:
         prefix: --input_file
         position: 2
     doc: Input file containing sequence data (SAM or BAM)
+
   read_buffer_size:
     type:
     - 'null'
