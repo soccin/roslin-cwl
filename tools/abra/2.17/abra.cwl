@@ -239,7 +239,7 @@ inputs:
   working:
     doc: Working directory for intermediate output. Must not already exist
     inputBinding:
-      prefix: --working
+      prefix: --tmpdir
       position: 2
     type: string
 
