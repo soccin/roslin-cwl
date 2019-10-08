@@ -1,7 +1,10 @@
 #!/usr/bin/env cwl-runner
 cwlVersion: v1.0
 class: CommandLineTool
-baseCommand: [doFacets]
+baseCommand:
+  - python
+  - /usr/bin/facets-suite/facets
+  - doFacets
 id: facets-doFacets
 
 requirements:
