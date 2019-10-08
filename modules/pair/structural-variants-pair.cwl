@@ -15,7 +15,16 @@ inputs:
     genome: string
     normal_sample_name: string
     tumor_sample_name: string
-    ref_fasta: File
+    ref_fasta:
+        type: File
+        secondaryFiles:
+          - .amb
+          - .ann
+          - .bwt
+          - .pac
+          - .sa
+          - .fai
+          - ^.dict
     vep_path: string
     custom_enst: string
     vep_data: string
