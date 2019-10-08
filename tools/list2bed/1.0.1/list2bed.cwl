@@ -3,6 +3,9 @@ cwlVersion: v1.0
 
 class: CommandLineTool
 id: list2bed
+baseCommand:
+  - python
+  - /usr/bin/list2bed.py
 
 requirements:
   InlineJavascriptRequirement: {}
