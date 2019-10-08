@@ -41,6 +41,15 @@ inputs:
       position: 0
       separate: false
 
+  analysis_type:
+    type:
+      - 'null'
+      - string
+    default: MuTect
+    inputBinding:
+      prefix: -T
+      position: 2
+
   arg_file:
     type:
     - 'null'
@@ -193,6 +202,14 @@ inputs:
 
   reference_sequence:
     type: File
+    secondaryFiles:
+      - .amb
+      - .ann
+      - .bwt
+      - .pac
+      - .sa
+      - .fai
+      - ^.dict
     inputBinding:
       prefix: --reference_sequence
       position: 2
@@ -942,6 +959,13 @@ inputs:
     doc: Target coverage threshold for downsampling to coverage
     inputBinding:
       prefix: --downsample_to_coverage
+      position: 2
+
+  downsampling_type:
+    type: ['null', string]
+    default: NONE
+    inputBinding:
+      prefix: --downsampling_type
       position: 2
 
 outputs:
