@@ -4,141 +4,154 @@ class: CommandLineTool
 baseCommand:
 - perl
 - /usr/bin/vardict/var2vcf_paired.pl
+id: vardict_var2vcf
+
 arguments:
 - position: 0
   prefix: -N
   valueFrom: "${\n    return inputs.N + \"|\" + inputs.N2;\n}"
-id: vardict_var2vcf
-inputs:
-- doc: Indicate the chromosome names are just numbers, such as 1, 2, not chr1, chr2
-  id: C
-  inputBinding:
-    position: 0
-    prefix: -C
-  type: boolean?
-- doc: Debug mode. Will print some error messages and append full genotype at the
-    end.
-  id: D
-  inputBinding:
-    position: 0
-    prefix: -D
-  type: float?
-- doc: The hexical to filter reads using samtools. Default - 0x500 (filter 2nd alignments
-    and duplicates). Use -F 0 to turn it off.
-  id: F
-  inputBinding:
-    position: 0
-    prefix: -F
-  type: float?
-- doc: The indel size. Default - 120bp
-  id: I
-  inputBinding:
-    position: 0
-    prefix: -I
-  type: int?
-- doc: The minimum matches for a read to be considered. If, after soft-clipping, the
-    matched bp is less than INT, then the read is discarded. It's meant for PCR based
-    targeted sequencing where there's no insert and the matching is only the primers.
-    Default - 0, or no filtering
-  id: M
-  inputBinding:
-    position: 0
-    prefix: -M
-  type: boolean?
-- doc: Tumor Sample Name
-  id: N
-  type: string?
-- doc: Normal Sample Name
-  id: N2
-  type: string?
-- doc: The read position filter. If the mean variants position is less that specified,
-    it's considered false positive. Default - 5
-  id: P
-  inputBinding:
-    position: 0
-    prefix: -P
-  type: float?
-- doc: If set, reads with mapping quality less than INT will be filtered and ignored
-  id: Q
-  inputBinding:
-    position: 0
-    prefix: -Q
-  type: string?
-- doc: The column for region start, e.g. gene start
-  id: S
-  inputBinding:
-    position: 0
-    prefix: -S
-  type: boolean?
-- doc: The threshold for allele frequency, default - 0.05 or 5%%
-  id: f
-  inputBinding:
-    position: 0
-    prefix: -f
-  type: string?
-- doc: If set, reads with mismatches more than INT will be filtered and ignored. Gaps
-    are not counted as mismatches. Valid only for bowtie2/TopHat or BWA aln followed
-    by sampe. BWA mem is calculated as NM - Indels. Default - 8, or reads with more
-    than 8 mismatches will not be used.
-  id: m
-  inputBinding:
-    position: 0
-    prefix: -m
-  type: int?
-- doc: The Qratio of (good_quality_reads)/(bad_quality_reads+0.5). The quality is
-    defined by -q option. Default - 1.5
-  id: o
-  inputBinding:
-    position: 0
-    prefix: -o
-  type: float?
-- doc: Do pileup regarless the frequency
-  id: p
-  inputBinding:
-    position: 0
-    prefix: -p
-  type: float?
-- doc: output vcf file
-  id: vcf
-  type: string?
-- id: A
-  inputBinding:
-    position: 0
-    prefix: -A
-  type: boolean?
-- id: c
-  inputBinding:
-    position: 0
-    prefix: -c
-  type: int?
-- id: q
-  inputBinding:
-    position: 0
-    prefix: -q
-  type: float?
-- id: d
-  inputBinding:
-    position: 0
-    prefix: -d
-  type: int?
-- id: v
-  inputBinding:
-    position: 0
-    prefix: -v
-  type: int?
-- id: input_vcf
-  type: File?
-outputs:
-- id: output
-  outputBinding:
-    glob: ${ if (inputs.vcf) return inputs.vcf; return null; }
-  type: File
+
 requirements:
-- class: ResourceRequirement
-  coresMin: 4
-  ramMin: 32000
-- class: DockerRequirement
-  dockerPull: mskcc/roslin-variant-vardict:1.5.1
-- class: InlineJavascriptRequirement
+  InlineJavascriptRequirement: {}
+  ResourceRequirement:
+    coresMin: 4
+    ramMin: 32000
+  DockerRequirement:
+    dockerPull: mskcc/roslin-variant-vardict:1.5.1
+
+inputs:
+
+  C:
+    type: boolean?
+    doc: Indicate the chromosome names are just numbers, such as 1, 2, not chr1, chr2
+    inputBinding:
+      position: 0
+      prefix: -C
+
+  D:
+    type: float?
+    doc: Debug mode. Will print some error messages and append full genotype at the end.
+    inputBinding:
+      position: 0
+      prefix: -D
+  F:
+    type: float?
+    doc: The hexical to filter reads using samtools. Default - 0x500 (filter 2nd alignments and duplicates). Use -F 0 to turn it off.
+    inputBinding:
+      position: 0
+      prefix: -F
+
+  I:
+    type: int?
+    doc: The indel size. Default - 120bp
+    inputBinding:
+      position: 0
+      prefix: -I
+
+  M:
+    type: boolean?
+    doc: The minimum matches for a read to be considered. If, after soft-clipping, the matched bp is less than INT, then the read is discarded. It's meant for PCR based targeted sequencing where there's no insert and the matching is only the primers. Default - 0, or no filtering
+    inputBinding:
+      position: 0
+      prefix: -M
+
+  N:
+    type: string?
+    doc: Tumor Sample Name
+
+  N2:
+    type: string?
+    doc: Normal Sample Name
+
+  P:
+    type: float?
+    doc: The read position filter. If the mean variants position is less that specified, it's considered false positive. Default - 5
+    inputBinding:
+      position: 0
+      prefix: -P
+
+  Q:
+    type: string?
+    doc: If set, reads with mapping quality less than INT will be filtered and ignored
+    inputBinding:
+      position: 0
+      prefix: -Q
+
+  S:
+    type: boolean?
+    doc: The column for region start, e.g. gene start
+    inputBinding:
+      position: 0
+      prefix: -S
+  f:
+    type: string?
+    doc: The threshold for allele frequency, default - 0.05 or 5%%
+    inputBinding:
+      position: 0
+      prefix: -f
+
+  m:
+    type: int?
+    doc: If set, reads with mismatches more than INT will be filtered and ignored. Gaps are not counted as mismatches. Valid only for bowtie2/TopHat or BWA aln followed by sampe. BWA mem is calculated as NM - Indels. Default - 8, or reads with more than 8 mismatches will not be used.
+    inputBinding:
+      position: 0
+      prefix: -m
+  o:
+    type: float?
+    doc: The Qratio of (good_quality_reads)/(bad_quality_reads+0.5). The quality is defined by -q option. Default - 1.5
+    inputBinding:
+      position: 0
+      prefix: -o
+
+  p:
+    doc: Do pileup regarless the frequency
+    type: float?
+    inputBinding:
+      position: 0
+      prefix: -p
+
+  vcf:
+    type: string?
+    doc: output vcf file
+
+  A:
+    type: boolean?
+    inputBinding:
+      position: 0
+      prefix: -A
+
+  c:
+    type: int?
+    inputBinding:
+      position: 0
+      prefix: -c
+
+  q:
+    type: float?
+    inputBinding:
+      position: 0
+      prefix: -q
+
+  d:
+    type: int?
+    inputBinding:
+      position: 0
+      prefix: -d
+
+  v:
+    type: int?
+    inputBinding:
+      position: 0
+      prefix: -v
+
+  input_vcf:
+    type: File?
+
+outputs:
+  output:
+    type: File
+    outputBinding:
+      glob: ${ if (inputs.vcf) return inputs.vcf; return null; }
+
 stdin: $(inputs.input_vcf.path)
 stdout: "${\n  if (inputs.vcf)\n    return inputs.vcf;\n  return null;\n}\n"

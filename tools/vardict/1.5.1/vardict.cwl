@@ -14,7 +14,6 @@ inputs:
     type: File?
   C:
     type: boolean?
-    default: true
   D:
     type: boolean?
   N:
@@ -89,6 +88,8 @@ inputs:
     type: string?
   r:
     type: string?
+  t:
+    type: boolean?
   vcf:
     type: string?
   G:
@@ -141,6 +142,7 @@ steps:
       p: p
       q: q
       r: r
+      t: t
       th: th
       x: x
       z: z
