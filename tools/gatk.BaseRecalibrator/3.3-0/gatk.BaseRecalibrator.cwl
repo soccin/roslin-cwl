@@ -591,9 +591,9 @@ inputs:
     type:
       type: array
       items: File
-      inputBinding:
-        prefix: --knownSites
-        position: 2
+    inputBinding:
+      prefix: --knownSites
+      position: 2
     doc: A database of known polymorphic sites to skip over in the recalibration algorithm
     secondaryFiles:
     - .idx
