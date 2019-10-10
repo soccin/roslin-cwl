@@ -195,6 +195,40 @@ steps:
                         N: tumor_sample_name
                         N2: normal_sample_name
                         bedfile: bed
+                        C:
+                            default: true
+                        D:
+                            default: false
+                        x:
+                            default: '2000'
+                        H:
+                            default: false
+                        th:
+                            default: '4'
+                        E:
+                            default: '3'
+                        i:
+                            default: false
+                        hh:
+                            default: false
+                        f:
+                            default: '0.01'
+                        c:
+                            default: '1'
+                        Q:
+                            default: '20'
+                        X:
+                            default: '5'
+                        Z:
+                            default: '1'
+                        S:
+                            default: '2'
+                        p:
+                            default: false
+                        q:
+                            default: '20'
+                        t:
+                            default: false
                         vcf:
                             valueFrom: ${ return inputs.b.basename.replace(".bam", ".") + inputs.b2.basename.replace(".bam", ".vardict.vcf") }
                     out: [output]
