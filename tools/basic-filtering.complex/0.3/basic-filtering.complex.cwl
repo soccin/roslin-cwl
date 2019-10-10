@@ -7,6 +7,8 @@ baseCommand:
   - /usr/bin/basicfiltering/filter_complex.py
 id: basic-filtering-complex
 requirements:
+  InitialWorkDirRequirement:
+    listing: $(inputs.inputVcf)
   InlineJavascriptRequirement: {}
   ResourceRequirement:
     ramMin: 16000
