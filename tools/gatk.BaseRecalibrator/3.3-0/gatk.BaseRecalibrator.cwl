@@ -65,6 +65,8 @@ inputs:
     inputBinding:
       position: 2
     doc: Input file containing sequence data (SAM or BAM)
+    secondaryFiles:
+    - ^.bai
 
   read_buffer_size:
     type:
