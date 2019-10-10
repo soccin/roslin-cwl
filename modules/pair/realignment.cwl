@@ -176,13 +176,19 @@ steps:
             working: abra_scratch
             targets: list2bed/output_file
         out: [outbams]
-
+    index_bams:
+        run: ../../tools/cmo-utils/1.9.15/cmo-index.cwl
+        in:
+            bam: abra/outbams
+        scatter: [bam]
+        scatterMethod: dotproduct
+        out: [bam_indexed]
     gatk_base_recalibrator:
         run: ../../tools/gatk.BaseRecalibrator/3.3-0/gatk.BaseRecalibrator.cwl
         in:
             java_temp: tmp_dir
             reference_sequence: ref_fasta
-            input_file: abra/outbams
+            input_file: index_bams/bam_indexed
             dbsnp: dbsnp
             hapmap: hapmap
             indels_1000g: indels_1000g
@@ -198,7 +204,7 @@ steps:
 
     parallel_printreads:
         in:
-            input_file: abra/outbams
+            input_file: index_bams/bam_indexed
             reference_sequence: ref_fasta
             BQSR: gatk_base_recalibrator/recal_matrix
             tmp_dir: tmp_dir
