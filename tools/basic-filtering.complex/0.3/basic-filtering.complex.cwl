@@ -21,9 +21,7 @@ doc: |
 
 inputs:
   inputVcf:
-    type:
-    - string
-    - File
+    type: File
     doc: Input VCF file
     inputBinding:
       prefix: --input-vcf
