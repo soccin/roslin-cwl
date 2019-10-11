@@ -4,7 +4,11 @@ class: Workflow
 id: vardict
 label: vardict
 requirements:
-  InlineJavascriptRequirement: {}
+    MultipleInputFeatureRequirement: {}
+    ScatterFeatureRequirement: {}
+    SubworkflowFeatureRequirement: {}
+    InlineJavascriptRequirement: {}
+    StepInputExpressionRequirement: {}
 inputs:
   bedfile:
     type: File?
@@ -144,6 +148,9 @@ steps:
       r: r
       t: t
       th: th
+      vcf: vcf
+      v:
+        valueFrom: ${ return inputs.vcf.replace(".vcf", "_tmp.vcf") }
       x: x
       z: z
     out: [output]

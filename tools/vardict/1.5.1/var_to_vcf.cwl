@@ -154,4 +154,4 @@ outputs:
       glob: ${ if (inputs.vcf) return inputs.vcf; return null; }
 
 stdin: $(inputs.input_vcf.path)
-stdout: "${\n  if (inputs.vcf)\n    return inputs.vcf;\n  return null;\n}\n"
+stdout: var_to_var_output.log

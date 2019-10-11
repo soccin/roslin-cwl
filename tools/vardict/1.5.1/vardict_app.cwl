@@ -318,7 +318,7 @@ inputs:
       prefix: '-3'
 
   v:
-    type: string?
+    type: string
     doc: output vcf file
     inputBinding:
       position: 0
@@ -342,8 +342,8 @@ outputs:
   output:
     type: File
     outputBinding:
-      glob: tmp_output.vcf
+      glob: inputs.v
 
 
-stderr: tmp_err.log
-stdout: tmp_output.vcf
+stderr: vardict_app_err.log
+stdout: vardict_app_output.log
