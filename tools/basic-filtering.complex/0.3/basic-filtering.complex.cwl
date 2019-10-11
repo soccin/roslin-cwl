@@ -8,7 +8,8 @@ baseCommand:
 id: basic-filtering-complex
 requirements:
   InitialWorkDirRequirement:
-    listing: $(inputs.inputVcf)
+    listing:
+      - $(inputs.inputVcf)
   InlineJavascriptRequirement: {}
   ResourceRequirement:
     ramMin: 16000
