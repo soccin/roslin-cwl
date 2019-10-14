@@ -111,7 +111,7 @@ inputs:
       prefix: -p
 
   vcf:
-    type: string?
+    type: string
     doc: output vcf file
 
   A:
@@ -151,7 +151,7 @@ outputs:
   output:
     type: File
     outputBinding:
-      glob: ${ if (inputs.vcf) return inputs.vcf; return null; }
+      glob: ${ return inputs.vcf; }
 
 stdin: $(inputs.input_vcf.path)
 stdout: var_to_var_output.log

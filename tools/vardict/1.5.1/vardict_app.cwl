@@ -342,7 +342,7 @@ outputs:
   output:
     type: File
     outputBinding:
-      glob: inputs.v
+      glob: ${ return inputs.v; }
 
 
 stderr: vardict_app_err.log
