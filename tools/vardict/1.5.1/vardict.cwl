@@ -14,8 +14,10 @@ inputs:
     type: File?
   b2:
     type: File?
+    secondaryFiles: ['.bai']
   b:
     type: File?
+    secondaryFiles: ['.bai']
   C:
     type: boolean?
   D:
@@ -98,6 +100,7 @@ inputs:
     type: string?
   G:
     type: File
+    secondaryFiles: ['.fai']
   f_1:
     type: string?
 outputs:

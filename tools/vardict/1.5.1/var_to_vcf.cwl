@@ -154,4 +154,4 @@ outputs:
       glob: ${ return inputs.vcf; }
 
 stdin: $(inputs.input_vcf.path)
-stdout: var_to_var_output.log
+stdout: ${ return inputs.vcf; }

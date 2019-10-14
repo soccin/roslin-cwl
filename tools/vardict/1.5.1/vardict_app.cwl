@@ -146,7 +146,7 @@ inputs:
       position: 0
       prefix: -V
 
-  V:
+  VS:
     type: string?
     doc: How strict to be when reading a SAM or BAM. STRICT - throw an exception if something looks wrong. LENIENT - Emit warnings but keep going if possible. SILENT - Like LENIENT, only don't emit warning messages. Default - LENIENT
     inputBinding:
@@ -317,13 +317,6 @@ inputs:
       position: 0
       prefix: '-3'
 
-  v:
-    type: string
-    doc: output vcf file
-    inputBinding:
-      position: 0
-      prefix: --vcf
-
   x:
     type: string?
     doc: The number of nucleotide to extend for each segment, default - 0 -y
@@ -342,8 +335,7 @@ outputs:
   output:
     type: File
     outputBinding:
-      glob: ${ return inputs.v; }
+      glob: vardict_app_output.vcf
 
 
-stderr: vardict_app_err.log
-stdout: vardict_app_output.log
+stdout: vardict_app_output.vcf

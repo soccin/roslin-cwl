@@ -219,7 +219,7 @@ steps:
                             default: '20'
                         X:
                             default: '5'
-                        Z:
+                        z:
                             default: '1'
                         S:
                             default: '2'
