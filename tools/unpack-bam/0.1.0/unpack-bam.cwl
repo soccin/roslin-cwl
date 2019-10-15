@@ -10,6 +10,15 @@ arguments:
   position: 0
   prefix: '--tmp-dir'
   shellQuote: false
+
+requirements:
+  DockerRequirement:
+    dockerPull: 'mskcc/unpack_bam:0.1.0'
+  InlineJavascriptRequirement: {}
+  ResourceRequirement:
+    ramMin: 16000
+    coresMin: 2
+
 inputs:
   - id: input_bam
     type: File
@@ -41,11 +50,3 @@ outputs:
         ${
           return inputs.output_dir;
          }
-label: unpack-bam
-requirements:
-  - class: DockerRequirement
-    dockerPull: 'mskcc/unpack_bam:0.1.0'
-  - class: InlineJavascriptRequirement
-  - class: ResourceRequirement
-    ramMin: 16000
-    coresMin: 2
