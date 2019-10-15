@@ -270,8 +270,6 @@ steps:
           valueFrom: ${ return inputs.runparams.genome }
         intervals:
           valueFrom: ${ return inputs.runparams.intervals }
-        tmp_dir:
-          valueFrom: ${ return inputs.runparams.tmp_dir }
         opt_dup_pix_dist:
           valueFrom: ${ return inputs.runparams.opt_dup_pix_dist }
         hapmap: hapmap
@@ -332,8 +330,6 @@ steps:
             valueFrom: ${ return inputs.runparams.facets_cval }
         facets_snps:
             valueFrom: ${ return inputs.db_files.facets_snps }
-        tmp_dir:
-            valueFrom: ${ return inputs.runparams.tmp_dir; }
         complex_tn:
             valueFrom: ${ return inputs.runparams.complex_tn; }
         complex_nn:
@@ -368,8 +364,6 @@ steps:
             valueFrom: ${ return inputs.db_files.delly_exclude }
         delly_type:
             valueFrom: ${ return inputs.runparams.delly_type; }
-        tmp_dir:
-            valueFrom: ${ return inputs.runparams.tmp_dir; }
     out: [delly_sv,delly_filtered_sv,merged_file,merged_file_unfiltered,maf_file,portal_file]
   maf_processing:
     run: ../modules/pair/maf-processing-pair.cwl
@@ -396,8 +390,6 @@ steps:
         curated_bams: curated_bams
         hotspot_list:
             valueFrom: ${ return inputs.db_files.hotspot_list }
-        tmp_dir:
-            valueFrom: ${ return inputs.runparams.tmp_dir }
         pairing_file:
             valueFrom: ${ return inputs.db_files.pairing_file }
     out: [maf,portal_fillout]

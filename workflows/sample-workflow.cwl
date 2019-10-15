@@ -49,7 +49,6 @@ inputs:
       - .sa
       - .fai
       - ^.dict
-  tmp_dir: string
   genome: string
   opt_dup_pix_dist: string
   bait_intervals: File
@@ -229,7 +228,6 @@ steps:
       add_rg_PU: flatten/rg_PU
       add_rg_SM: get_sample_info/ID
       add_rg_CN: get_sample_info/CN
-      tmp_dir: tmp_dir
     scatter: [chunkfastq1, chunkfastq2, add_rg_ID, add_rg_PU]
     scatterMethod: dotproduct
     out: [clstats1, clstats2, bam]
@@ -250,7 +248,6 @@ steps:
         add_rg_PU: string
         add_rg_SM: string
         add_rg_CN: string
-        tmp_dir: string
       outputs:
         clstats1:
           type: File
@@ -295,8 +292,6 @@ steps:
             CN: add_rg_CN
             SO:
               default: "coordinate"
-            TMP_DIR: tmp_dir
-            java_temp: tmp_dir
           out: [bam, bai]
   mark_duplicates:
     run: ../tools/picard.MarkDuplicates/2.9/picard.MarkDuplicates.cwl
@@ -307,8 +302,6 @@ steps:
         valueFrom: ${ return inputs.I[0].basename.replace(/\.chunk\d\d\d\.rg\.bam/, ".rg.md.bam") }
       M:
         valueFrom: ${ return inputs.I[0].basename.replace(/\.chunk\d\d\d\.rg\.bam/, ".rg.md_metrics") }
-      TMP_DIR: tmp_dir
-      java_temp: tmp_dir
     out: [bam, bai, mdmetrics]
   gather_metrics:
     run: ../modules/sample/gather-metrics-sample.cwl
@@ -319,7 +312,6 @@ steps:
       ref_fasta: ref_fasta
       conpair_markers_bed: conpair_markers_bed
       genome: genome
-      tmp_dir: tmp_dir
       gatk_jar_path: gatk_jar_path
       bam: mark_duplicates/bam
     out: [ gcbias_pdf,gcbias_metrics,gcbias_summary,as_metrics,hs_metrics,per_target_coverage,insert_metrics,insert_pdf,doc_basecounts,conpair_pileup ]

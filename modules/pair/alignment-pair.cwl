@@ -32,7 +32,6 @@ inputs:
           bwa_output: string
   genome: string
   intervals: string[]
-  tmp_dir: string
   opt_dup_pix_dist: string
   hapmap:
     type: File
@@ -51,7 +50,6 @@ inputs:
     secondaryFiles:
       - .idx
   covariates: string[]
-  abra_scratch: string
   abra_ram_min: int
   gatk_jar_path: string
   bait_intervals: File
@@ -152,7 +150,6 @@ steps:
     in:
       sample: pair
       genome: genome
-      tmp_dir: tmp_dir
       opt_dup_pix_dist: opt_dup_pix_dist
       gatk_jar_path: gatk_jar_path
       bait_intervals: bait_intervals
@@ -174,10 +171,8 @@ steps:
       indels_1000g: indels_1000g
       snps_1000g: snps_1000g
       covariates: covariates
-      abra_scratch: abra_scratch
       genome: genome
       ref_fasta: ref_fasta
       intervals: intervals
       abra_ram_min: abra_ram_min
-      tmp_dir: tmp_dir
     out: [outbams, covint_list, covint_bed, qual_metrics, qual_pdf]

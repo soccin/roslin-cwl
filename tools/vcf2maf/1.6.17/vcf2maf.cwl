@@ -6,6 +6,11 @@ baseCommand:
   - perl
   - /usr/bin/vcf2maf/vcf2maf.pl
 
+arguments:
+- valueFrom: "$(runtime.tmpdir)"
+  prefix: '--tmp-dir'
+  shellQuote: false
+
 label: vcf2maf
 
 requirements:
@@ -122,11 +127,6 @@ inputs:
     doc: When reporting co-located variants, allow mismatched variant alleles too
     inputBinding:
       prefix: --any-allele
-  tmp_dir:
-    type: ['null', string]
-    doc: Folder to retain intermediate VCFs after runtime
-    inputBinding:
-      prefix: --tmp-dir
   input_vcf:
     type:
     - string

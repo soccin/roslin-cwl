@@ -5,6 +5,11 @@ id: unpack-bam
 baseCommand:
   - perl
   - /opt/unpack_bam.pl
+arguments:
+- valueFrom: "$(runtime.tmpdir)"
+  position: 0
+  prefix: '--tmp-dir'
+  shellQuote: false
 inputs:
   - id: input_bam
     type: File
@@ -28,12 +33,6 @@ inputs:
     inputBinding:
       position: 0
       prefix: '--output-dir'
-  - id: tmp_dir
-    type: string
-    default: "/tmp"
-    inputBinding:
-      position: 0
-      prefix: '--tmp-dir'
 outputs:
   - id: rg_output
     type: Directory

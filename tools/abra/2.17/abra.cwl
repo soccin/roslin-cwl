@@ -18,6 +18,10 @@ arguments:
 - valueFrom: "-Xmx$(Math.round(parseInt(runtime.ram)/955))G"
   position: 0
   shellQuote: false
+- valueFrom: "$(runtime.tmpdir)"
+  position: 2
+  prefix: --tmpdir
+  shellQuote: false
 
 requirements:
   InlineJavascriptRequirement: {}
@@ -236,13 +240,6 @@ inputs:
       prefix: --undup
       position: 2
 
-  working:
-    doc: Working directory for intermediate output. Must not already exist
-    inputBinding:
-      prefix: --tmpdir
-      position: 2
-    type: string
-
   cl:
     type: ['null', string]
     doc: Compression level of output bam file (s) (default - 5)
@@ -317,13 +314,6 @@ inputs:
       contig. default of -1 disables (default - -1)
     inputBinding:
       prefix: --amq
-      position: 2
-
-  tmpdir:
-    type: ['null', string]
-    doc: Set the temp directory (overrides java. io.tmpdir)
-    inputBinding:
-      prefix: --tmpdir
       position: 2
 
   mcl:

@@ -256,8 +256,6 @@ steps:
         valueFrom: ${ return inputs.runparams.genome }
       intervals:
         valueFrom: ${ return inputs.runparams.intervals }
-      tmp_dir:
-        valueFrom: ${ return inputs.runparams.tmp_dir }
       opt_dup_pix_dist:
         valueFrom: ${ return inputs.runparams.opt_dup_pix_dist }
       hapmap: hapmap
@@ -318,8 +316,6 @@ steps:
             valueFrom: ${ return inputs.runparams.facets_cval }
         facets_snps:
             valueFrom: ${ return inputs.db_files.facets_snps }
-        tmp_dir:
-            valueFrom: ${ return inputs.runparams.tmp_dir; }
         complex_tn:
             valueFrom: ${ return inputs.runparams.complex_tn; }
         complex_nn:
@@ -350,8 +346,6 @@ steps:
         curated_bams: curated_bams
         hotspot_list:
             valueFrom: ${ return inputs.db_files.hotspot_list }
-        tmp_dir:
-            valueFrom: ${ return inputs.runparams.tmp_dir }
         pairing_file:
             valueFrom: ${ return inputs.db_files.pairing_file }
     out: [maf,portal_fillout]

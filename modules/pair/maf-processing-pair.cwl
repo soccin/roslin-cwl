@@ -61,7 +61,6 @@ inputs:
         secondaryFiles:
             - ^.bai
     hotspot_list: string
-    tmp_dir: string
     pairing_file: File
 outputs:
     maf:
@@ -85,7 +84,6 @@ steps:
             ref_fasta: ref_fasta
             vep_path: vep_path
             custom_enst: custom_enst
-            tmp_dir: tmp_dir
             retain_info:
                 default: "set,TYPE,FAILURE_REASON,MSI,MSILEN,SSF,LSEQ,RSEQ,STATUS,VSB"
             retain_fmt:

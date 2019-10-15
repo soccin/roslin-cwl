@@ -23,6 +23,9 @@ arguments:
 - valueFrom: "-XX:-UseGCOverheadLimit"
   position: 0
   shellQuote: false
+- valueFrom: "-Djava.io.tmpdir=$(runtime.tmpdir)"
+  position: 0
+  shellQuote: false
 
 requirements:
   InlineJavascriptRequirement: {}
@@ -36,13 +39,6 @@ doc: |
   None
 
 inputs:
-
-  java_temp:
-    type: string
-    inputBinding:
-      prefix: -Djava.io.tmpdir=
-      position: 0
-      separate: false
 
   out:
     type:

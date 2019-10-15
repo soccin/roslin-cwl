@@ -61,9 +61,7 @@ inputs:
         secondaryFiles:
             - .idx
     covariates: string[]
-    abra_scratch: string
     abra_ram_min: int
-    tmp_dir: string
 outputs:
     covint_list:
         type: File
@@ -118,7 +116,6 @@ steps:
     gatk_find_covered_intervals:
         run: ../../tools/gatk.FindCoveredIntervals/3.3-0/gatk.FindCoveredIntervals.cwl
         in:
-            java_temp: tmp_dir
             pair: pair
             intervals_list: intervals
             reference_sequence: ref_fasta
@@ -173,7 +170,6 @@ steps:
             ref: ref_fasta
             out:
                 valueFrom: ${ return inputs.in.map(function(x){ return x.basename.replace(".bam", ".abra.bam"); }); }
-            working: abra_scratch
             targets: list2bed/output_file
         out: [outbams]
     index_bams:
@@ -186,7 +182,6 @@ steps:
     gatk_base_recalibrator:
         run: ../../tools/gatk.BaseRecalibrator/3.3-0/gatk.BaseRecalibrator.cwl
         in:
-            java_temp: tmp_dir
             reference_sequence: ref_fasta
             input_file: index_bams/bam_indexed
             dbsnp: dbsnp
@@ -207,7 +202,6 @@ steps:
             input_file: index_bams/bam_indexed
             reference_sequence: ref_fasta
             BQSR: gatk_base_recalibrator/recal_matrix
-            tmp_dir: tmp_dir
         out: [out,qual_metrics,qual_pdf]
         scatter: [input_file]
         scatterMethod: dotproduct
@@ -218,7 +212,6 @@ steps:
                 input_file: File
                 reference_sequence: File
                 BQSR: File
-                tmp_dir: string
             outputs:
                 out:
                     type: File
@@ -238,7 +231,6 @@ steps:
                         reference_sequence: reference_sequence
                         BQSR: BQSR
                         input_file: input_file
-                        java_temp: tmp_dir
                         num_cpu_threads_per_data_thread:
                             valueFrom: ${ return "5"; }
                         emit_original_quals:
@@ -252,11 +244,9 @@ steps:
                     run: ../../tools/picard.CollectMultipleMetrics/2.9/picard.CollectMultipleMetrics.cwl
                     in:
                       I: gatk_print_reads/out_bam
-                      java_temp: tmp_dir
                       REFERENCE_SEQUENCE: reference_sequence
                       PROGRAM:
                         valueFrom: ${return ["null","MeanQualityByCycle"]}
                       O:
                         valueFrom: ${ return inputs.I.basename.replace(".bam", ".qmetrics")}
-                      TMP_DIR: tmp_dir
                     out: [qual_file, qual_hist]

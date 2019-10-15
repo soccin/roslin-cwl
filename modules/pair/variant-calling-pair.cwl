@@ -41,7 +41,6 @@ inputs:
     facets_pcval: int
     facets_cval: int
     facets_snps: string
-    tmp_dir: string
     complex_nn: float
     complex_tn: float
 outputs:
@@ -106,7 +105,6 @@ steps:
         out: [bam_indexed]
     call_variants:
         in:
-            tmp_dir: tmp_dir
             tumor_bam: tumor_index/bam_indexed
             normal_bam: normal_index/bam_indexed
             genome: genome
@@ -142,7 +140,6 @@ steps:
                 facets_pcval: int
                 facets_cval: int
                 facets_snps: string
-                tmp_dir: string
             outputs:
                 mutect_vcf:
                     type: File
@@ -243,7 +240,6 @@ steps:
                         read_filter: mutect_rf
                         downsample_to_coverage: mutect_dcov
                         intervals: bed
-                        java_temp: tmp_dir
                         vcf:
                             valueFrom: ${ return inputs.input_file_tumor.basename.replace(".bam",".") + inputs.input_file_normal.basename.replace(".bam", ".mutect.vcf") }
                         out:
