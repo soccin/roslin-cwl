@@ -18,7 +18,7 @@ inputs:
       items:
         type: array
         items: File
-    secondaryFiles: ^.bai
+    secondaryFiles: [^.bai]
   clstats1:
     type:
       type: array
