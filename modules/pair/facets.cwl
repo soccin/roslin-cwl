@@ -17,7 +17,7 @@ inputs:
     genome: string
     facets_pcval: int
     facets_cval: int
-    facets_snps: string
+    facets_snps: File
 
 outputs:
 

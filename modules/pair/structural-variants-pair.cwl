@@ -27,7 +27,7 @@ inputs:
           - ^.dict
     vep_path: string
     custom_enst: string
-    vep_data: string
+    vep_data: Directory
     delly_type: string[]
     delly_exclude: File
     exac_filter:

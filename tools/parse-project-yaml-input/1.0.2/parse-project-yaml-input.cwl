@@ -16,7 +16,7 @@ inputs:
         ref_fasta: string
         vep_path: string
         custom_enst: string
-        vep_data: string
+        vep_data: Directory
         hotspot_list: string
         hotspot_vcf: string
         target_intervals: File

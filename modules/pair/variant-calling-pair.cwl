@@ -40,7 +40,7 @@ inputs:
           - ^.dict
     facets_pcval: int
     facets_cval: int
-    facets_snps: string
+    facets_snps: File
     complex_nn: float
     complex_tn: float
 outputs:
@@ -139,7 +139,7 @@ steps:
                 refseq: File #file of refseq genes...
                 facets_pcval: int
                 facets_cval: int
-                facets_snps: string
+                facets_snps: File
             outputs:
                 mutect_vcf:
                     type: File

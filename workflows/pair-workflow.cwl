@@ -17,11 +17,11 @@ inputs:
         refseq: File
         vep_path: string
         custom_enst: string
-        vep_data: string
+        vep_data: Directory
         hotspot_list: string
         hotspot_list_maf: File
         hotspot_vcf: string
-        facets_snps: string
+        facets_snps: File
         bait_intervals: File
         target_intervals: File
         fp_intervals: File

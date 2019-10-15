@@ -31,9 +31,9 @@ inputs:
         refseq: File
         ref_fasta: string
         vep_path: string
-        facets_snps: string
+        facets_snps: File
         custom_enst: string
-        vep_data: string
+        vep_data: Directory
         hotspot_list: string
         hotspot_vcf: string
         bait_intervals: File

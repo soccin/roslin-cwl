@@ -57,7 +57,7 @@ inputs:
         snps_1000g: File
         ref_fasta: string
         exac_filter: File
-        vep_data: string
+        vep_data: Directory
         bait_intervals: File
         target_intervals: File
         fp_intervals: File
