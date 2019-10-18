@@ -17,7 +17,7 @@ inputs:
         refseq: File
         vep_path: string
         custom_enst: string
-        vep_data: Directory
+        vep_data: string
         hotspot_list: string
         hotspot_list_maf: File
         hotspot_vcf: string

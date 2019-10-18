@@ -55,7 +55,7 @@ inputs:
         type: File
         secondaryFiles:
             - .tbi
-    vep_data: Directory
+    vep_data: string
     curated_bams:
         type: File[]
         secondaryFiles:

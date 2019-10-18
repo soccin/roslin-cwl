@@ -118,7 +118,7 @@ inputs:
    inputBinding:
      prefix: --vep-path
   vep_data:
-    type: ['null', Directory]
+    type: ['null', string]
     doc: VEPs base cache/plugin directory
     inputBinding:
       prefix: --vep-data
