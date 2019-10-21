@@ -22,7 +22,7 @@ inputs:
         hotspot_list_maf: File
         delly_exclude: File
         hotspot_vcf: string
-        facets_snps: string
+        facets_snps: File
         bait_intervals: File
         target_intervals: File
         fp_intervals: File

@@ -51,7 +51,7 @@ inputs:
       fields:
         refseq: File
         ref_fasta: string
-        vep_data: string
+        vep_data: Directory
         hotspot_list: File
         hotspot_vcf: File
         bait_intervals: File

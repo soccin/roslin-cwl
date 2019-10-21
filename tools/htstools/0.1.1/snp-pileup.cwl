@@ -89,7 +89,7 @@ inputs:
       prefix: --ignore-overlaps
 
   vcf:
-    type: string
+    type: File
 
     doc: vcf file
     inputBinding:
