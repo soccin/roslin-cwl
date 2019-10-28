@@ -14,7 +14,7 @@ arguments:
 requirements:
   InlineJavascriptRequirement: {}
   ResourceRequirement:
-    ramMin: 24000
+    ramMin: 32000
     coresMin: 4
   DockerRequirement:
     dockerPull: mskcc/roslin-variant-bwa:0.7.5a
