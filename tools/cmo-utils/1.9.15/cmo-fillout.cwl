@@ -8,8 +8,8 @@ id: cmo-fillout
 requirements:
   InlineJavascriptRequirement: {}
   ResourceRequirement:
-    ramMin: 32000
-    coresMin: 2
+    ramMin: 48000
+    coresMin: 4
   DockerRequirement:
     dockerPull: mskcc/roslin-variant-cmo-utils:1.9.15
 
@@ -61,20 +61,16 @@ inputs:
     inputBinding:
       prefix: --fillout
 
-  n_threads:
-    type:
-    - 'null'
-    - int
-    default: 4
-    doc: Multithreaded GBCMS
-    inputBinding:
-      prefix: --n_threads
-
   output_format:
     type: string
     doc: Output format MAF(1) or tab-delimited with VCF based coordinates(2)
     inputBinding:
       prefix: --format
+
+arguments:
+  - position: 0
+    prefix: '--n_threads'
+    valueFrom: $(runtime.cores)
 
 outputs:
 
