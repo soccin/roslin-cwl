@@ -148,8 +148,6 @@ steps:
                             default: "1"
                         output:
                             valueFrom: ${ return inputs.maf.basename.replace(".maf", ".curated.fillout"); }
-                        n_threads:
-                            default: 10
                     out: [fillout_out]
 
     ngs_filters:
