@@ -65,8 +65,8 @@ inputs:
         items: File
   project_prefix: string
   fp_genotypes: File
-  grouping_file: File
   pairing_file: File
+  grouping_list: string[]
 
 outputs:
   merged_mdmetrics:
@@ -152,7 +152,7 @@ steps:
       files: doc_basecounts
       file_prefix: project_prefix
       fp_genotypes: fp_genotypes
-      grouping_file: grouping_file
+      grouping_list: grouping_list
       pairing_file: pairing_file
     out: [ output, fp_summary, minor_contam_output ]
     run: ./generate-fingerprint.cwl

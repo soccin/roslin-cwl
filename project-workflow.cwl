@@ -27,7 +27,6 @@ inputs:
         fp_genotypes: File
         conpair_markers: string
         conpair_markers_bed: string
-        grouping_file: File
         request_file: File
         pairing_file: File
   ref_fasta:
@@ -123,6 +122,7 @@ inputs:
             zR2: File[]
             bam: File[]
             RG_ID: string[]
+            group: string
             adapter: string
             adapter2: string
             bwa_output: string
@@ -307,4 +307,5 @@ steps:
         valueFrom: ${ return []; }
       directories:
         valueFrom: ${ return []; }
+      pairs: pairs
     out: [consolidated_results,qc_pdf]

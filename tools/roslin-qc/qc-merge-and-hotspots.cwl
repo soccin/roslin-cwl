@@ -77,7 +77,6 @@ inputs:
         items: File
   project_prefix: string
   fp_genotypes: File
-  grouping_file: File
   pairing_file: File
   hotspot_list_maf: File
   ref_fasta:
@@ -91,6 +90,7 @@ inputs:
       - .fai
       - ^.dict
   genome: string
+  grouping_list: string[]
 
 outputs:
 
@@ -156,12 +156,12 @@ steps:
       md_metrics: md_metrics
       hs_metrics: hs_metrics
       per_target_coverage: per_target_coverage
+      grouping_list: grouping_list
       insert_metrics: insert_metrics
       doc_basecounts: doc_basecounts
       qual_metrics: qual_metrics
       project_prefix: project_prefix
       fp_genotypes: fp_genotypes
-      grouping_file: grouping_file
       pairing_file: pairing_file
     out: [ merged_mdmetrics, merged_hsmetrics, merged_hstmetrics, merged_insert_size_histograms, fingerprints_output, fingerprint_summary, minor_contam_output, qual_files_r, qual_files_o, cutadapt_summary ]
 

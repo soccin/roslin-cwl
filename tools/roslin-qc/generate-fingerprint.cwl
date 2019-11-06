@@ -32,10 +32,12 @@ inputs:
     type: File
     inputBinding:
       prefix: -fp
-  grouping_file:
-    type: File
-    inputBinding:
-      prefix: -group
+  grouping_list:
+    type:
+      type: array
+      items: string
+      inputBinding:
+        prefix: -singleSample
   pairing_file:
     type: File
     inputBinding:
