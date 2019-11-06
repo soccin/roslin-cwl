@@ -27,7 +27,6 @@ inputs:
         fp_genotypes: File
         conpair_markers: string
         conpair_markers_bed: string
-        request_file: File
         pairing_file: File
   ref_fasta:
     type: File
@@ -97,6 +96,9 @@ inputs:
         complex_nn: float
         delly_type: string[]
         project_prefix: string
+        assay: string
+        pi: string
+        pi_email: string
         opt_dup_pix_dist: string
         facets_pcval: int
         facets_cval: int

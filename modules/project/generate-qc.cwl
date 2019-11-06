@@ -17,7 +17,6 @@ inputs:
       fields:
         fp_genotypes: File
         pairing_file: File
-        request_file: File
         hotspot_list_maf: File
         conpair_markers: string
   runparams:
@@ -27,6 +26,9 @@ inputs:
         project_prefix: string
         genome: string
         scripts_bin: string
+        assay: string
+        pi: string
+        pi_email: string
   ref_fasta:
     type: File
     secondaryFiles:
@@ -278,8 +280,12 @@ steps:
       runparams: runparams
       db_files: db_files
       data_dir: consolidate_results/directory
-      request_file:
-        valueFrom: ${ return inputs.db_files.request_file; }
+      assay:
+        valueFrom: ${ return inputs.runparams.assay }
+      pi:
+        valueFrom: ${ return inputs.runparams.pi }
+      pi_email:
+        valueFrom: ${ return inputs.runparams.pi_email }
       project_prefix:
         valueFrom: ${ return inputs.runparams.project_prefix; }
     out: [ qc_pdf ]
