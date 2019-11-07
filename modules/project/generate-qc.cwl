@@ -232,7 +232,7 @@ steps:
       bams:
         valueFrom: ${ var output = [];  for (var i=0; i<inputs.aa_bams.length; i++) { output=output.concat(inputs.aa_bams[i]); } return output; }
       grouping_list:
-        valueFrom: ${ var output = [];  for (var i=0; i<inputs.pairs.length; i++) {  for (var j=0; j<inputs.pairs[i].length; i++) { var singleSample = inputs.pairs[i][j]["ID"] + ":" + inputs.pairs[i][j]["group"]; output=output.concat(singleSample); } } return output; }
+        valueFrom: ${ var output = [];  for (var i=0; i<inputs.pairs.length; i++) {  for (var j=0; j<inputs.pairs[i].length; j++) { var singleSample = inputs.pairs[i][j]["ID"] + ":" + inputs.pairs[i][j]["group"]; output=output.concat(singleSample); } } return output; }
       hs_metrics: hs_metrics
       md_metrics: md_metrics
       per_target_coverage: per_target_coverage
