@@ -9,7 +9,7 @@ requirements:
     ramMin: 8000
     coresMin: 1
   DockerRequirement:
-    dockerPull: mskcc/roslin-variant-roslin-qc:0.6.1
+    dockerPull: mskcc/roslin-variant-roslin-qc:0.6.2
 
 class: CommandLineTool
 baseCommand:
@@ -29,10 +29,20 @@ inputs:
     inputBinding:
       prefix: --path
 
-  request_file:
-    type: File
+  assay:
+    type: string
     inputBinding:
-      prefix: --request_file
+      prefix: --assay
+
+  pi:
+    type: string
+    inputBinding:
+      prefix: --pi
+
+  pi_email:
+    type: string
+    inputBinding:
+      prefix: --pi_email
 
   project_prefix:
     type: [ 'null', string ]

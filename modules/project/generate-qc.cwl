@@ -16,9 +16,7 @@ inputs:
       type: record
       fields:
         fp_genotypes: File
-        grouping_file: File
         pairing_file: File
-        request_file: File
         hotspot_list_maf: File
         conpair_markers: string
   runparams:
@@ -28,6 +26,9 @@ inputs:
         project_prefix: string
         genome: string
         scripts_bin: string
+        assay: string
+        pi: string
+        pi_email: string
   ref_fasta:
     type: File
     secondaryFiles:
@@ -111,6 +112,29 @@ inputs:
     type:
       type: array
       items: File
+  pairs:
+    type:
+      type: array
+      items:
+        type: array
+        items:
+          type: record
+          fields:
+            CN: string
+            LB: string
+            ID: string
+            PL: string
+            PU: string[]
+            R1: File[]
+            R2: File[]
+            zR1: File[]
+            zR2: File[]
+            bam: File[]
+            RG_ID: string[]
+            group: string
+            adapter: string
+            adapter2: string
+            bwa_output: string
 
 
 outputs:
@@ -199,6 +223,7 @@ steps:
     run: ../../tools/roslin-qc/qc-merge-and-hotspots.cwl
     in:
       aa_bams: bams
+      pairs: pairs
       runparams: runparams
       ref_fasta: ref_fasta
       db_files: db_files
@@ -206,6 +231,8 @@ steps:
       clstats2: clstats2
       bams:
         valueFrom: ${ var output = [];  for (var i=0; i<inputs.aa_bams.length; i++) { output=output.concat(inputs.aa_bams[i]); } return output; }
+      grouping_list:
+        valueFrom: ${ var output = [];  for (var i=0; i<inputs.pairs.length; i++) {  for (var j=0; j<inputs.pairs[i].length; j++) { var singleSample = inputs.pairs[i][j]["ID"] + ":" + inputs.pairs[i][j]["group"]; output=output.concat(singleSample); } } return output; }
       hs_metrics: hs_metrics
       md_metrics: md_metrics
       per_target_coverage: per_target_coverage
@@ -216,8 +243,6 @@ steps:
         valueFrom: ${ return inputs.runparams.project_prefix; }
       fp_genotypes:
         valueFrom: ${ return inputs.db_files.fp_genotypes }
-      grouping_file:
-        valueFrom: ${ return inputs.db_files.grouping_file }
       pairing_file:
         valueFrom: ${ return inputs.db_files.pairing_file }
       hotspot_list_maf:
@@ -255,8 +280,12 @@ steps:
       runparams: runparams
       db_files: db_files
       data_dir: consolidate_results/directory
-      request_file:
-        valueFrom: ${ return inputs.db_files.request_file; }
+      assay:
+        valueFrom: ${ return inputs.runparams.assay }
+      pi:
+        valueFrom: ${ return inputs.runparams.pi }
+      pi_email:
+        valueFrom: ${ return inputs.runparams.pi_email }
       project_prefix:
         valueFrom: ${ return inputs.runparams.project_prefix; }
     out: [ qc_pdf ]
