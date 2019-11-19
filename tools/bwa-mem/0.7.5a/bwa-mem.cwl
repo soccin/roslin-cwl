@@ -208,7 +208,6 @@ inputs:
       position: 0
 
 
-stdout: $(inputs.output)
 outputs:
   bam:
     type: File
