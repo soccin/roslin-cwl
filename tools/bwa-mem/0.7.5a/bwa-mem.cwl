@@ -6,10 +6,6 @@ baseCommand:
 - /usr/bin/bwa
 - mem
 id: bwa-mem
-arguments:
-- valueFrom: '| /usr/bin/samtools view -bh -'
-  position: 4
-  shellQuote: true
 
 requirements:
   InlineJavascriptRequirement: {}

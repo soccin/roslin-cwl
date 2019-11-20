@@ -275,13 +275,22 @@ steps:
             fastq2: trim_galore/clfastq2
             basebamname: bwa_output
             output:
-              valueFrom: ${ return inputs.basebamname.replace(".bam", "." + inputs.fastq1.basename.match(/chunk\d\d\d/)[0] + ".bam");}
+              valueFrom: ${ return inputs.basebamname.replace(".bam", "." + inputs.fastq1.basename.match(/chunk\d\d\d/)[0] + ".sam");}
             genome: genome
-          out: [bam]
+          out: [sam]
+        sam_to_bam:
+          run: ../tools/samtools.view/1.3.1/samtools.view.cwl
+          in:
+            input: bwa/sam
+            isbam:
+              valueFrom: ${ return true; }
+            samheader:
+              valueFrom: ${ return true; }
+          out: [output_bam]
         add_rg_id:
           run: ../tools/picard.AddOrReplaceReadGroups/2.9/picard.AddOrReplaceReadGroups.cwl
           in:
-            I: bwa/bam
+            I: sam_to_bam/bam
             O:
               valueFrom: ${ return inputs.I.basename.replace(".bam", ".rg.bam") }
             LB: add_rg_LB
