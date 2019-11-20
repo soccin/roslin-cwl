@@ -205,7 +205,7 @@ inputs:
 
 stdout: $(inputs.output)
 outputs:
-  bam:
+  sam:
     type: File
     outputBinding:
       glob: |-
