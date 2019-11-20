@@ -290,7 +290,7 @@ steps:
         add_rg_id:
           run: ../tools/picard.AddOrReplaceReadGroups/2.9/picard.AddOrReplaceReadGroups.cwl
           in:
-            I: sam_to_bam/bam
+            I: sam_to_bam/output_bam
             O:
               valueFrom: ${ return inputs.I.basename.replace(".bam", ".rg.bam") }
             LB: add_rg_LB
