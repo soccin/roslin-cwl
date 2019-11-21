@@ -268,7 +268,7 @@ steps:
             adapter2: adapter2
           out: [clfastq1, clfastq2, clstats1, clstats2]
         bwa:
-          run: ../tools/bwa-mem/0.7.5a/bwa-mem.cwl
+          run: ../tools/bwa-mem/0.7.12/bwa-mem.cwl
           in:
             reference: ref_fasta
             fastq1: trim_galore/clfastq1
