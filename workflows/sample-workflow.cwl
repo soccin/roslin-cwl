@@ -268,20 +268,29 @@ steps:
             adapter2: adapter2
           out: [clfastq1, clfastq2, clstats1, clstats2]
         bwa:
-          run: ../tools/bwa-mem/0.7.5a/bwa-mem.cwl
+          run: ../tools/bwa-mem/0.7.12/bwa-mem.cwl
           in:
             reference: ref_fasta
             fastq1: trim_galore/clfastq1
             fastq2: trim_galore/clfastq2
             basebamname: bwa_output
             output:
-              valueFrom: ${ return inputs.basebamname.replace(".bam", "." + inputs.fastq1.basename.match(/chunk\d\d\d/)[0] + ".bam");}
+              valueFrom: ${ return inputs.basebamname.replace(".bam", "." + inputs.fastq1.basename.match(/chunk\d\d\d/)[0] + ".sam");}
             genome: genome
-          out: [bam]
+          out: [sam]
+        sam_to_bam:
+          run: ../tools/samtools.view/1.3.1/samtools.view.cwl
+          in:
+            input: bwa/sam
+            isbam:
+              valueFrom: ${ return true; }
+            samheader:
+              valueFrom: ${ return true; }
+          out: [output_bam]
         add_rg_id:
           run: ../tools/picard.AddOrReplaceReadGroups/2.9/picard.AddOrReplaceReadGroups.cwl
           in:
-            I: bwa/bam
+            I: sam_to_bam/output_bam
             O:
               valueFrom: ${ return inputs.I.basename.replace(".bam", ".rg.bam") }
             LB: add_rg_LB

@@ -1,18 +1,29 @@
-class: CommandLineTool
+#!/usr/bin/env cwl-runner
 cwlVersion: v1.0
+
+class: CommandLineTool
 baseCommand:
-  - bwa
-  - mem
+- /usr/bin/bwa
+- mem
 id: bwa-mem
+
+requirements:
+  InlineJavascriptRequirement: {}
+  ResourceRequirement:
+    ramMin: 32000
+    coresMin: 4
+  DockerRequirement:
+    dockerPull: mskcc/bwa_mem:0.7.12
+
+doc: |
+  run bwa mem
+
 inputs:
-  - id: reads
-    type: 'File[]'
-    inputBinding:
-      position: 3
-  - id: reference
+
+  reference:
     type: File
     inputBinding:
-      position: 2
+      position: 1
     secondaryFiles:
       - .amb
       - .ann
@@ -21,191 +32,185 @@ inputs:
       - .sa
       - .fai
       - ^.dict
-  - id: sample_id
-    type: string
-  - id: lane_id
-    type: string
-  - id: A
-    type: int?
-    inputBinding:
-      position: 0
-      prefix: '-A'
-  - id: B
-    type: int?
-    inputBinding:
-      position: 0
-      prefix: '-B'
-  - id: C
-    type: boolean?
-    inputBinding:
-      position: 0
-      prefix: '-C'
-  - id: E
-    type: 'int[]?'
-    inputBinding:
-      position: 0
-      prefix: '-E'
-      itemSeparator: ','
-  - id: L
-    type: 'int[]?'
-    inputBinding:
-      position: 0
-      prefix: '-L'
-      itemSeparator: ','
-  - id: M
-    type: boolean?
-    inputBinding:
-      position: 0
-      prefix: '-M'
-  - id: O
-    type: 'int[]?'
-    inputBinding:
-      position: 0
-      prefix: '-O'
-      itemSeparator: ','
-  - id: P
-    type: boolean?
-    inputBinding:
-      position: 0
-      prefix: '-P'
-  - id: S
-    type: boolean?
-    inputBinding:
-      position: 0
-      prefix: '-S'
-  - id: T
-    type: int?
-    inputBinding:
-      position: 0
-      prefix: '-T'
-  - id: U
-    type: int?
-    inputBinding:
-      position: 0
-      prefix: '-U'
-  - id: a
-    type: boolean?
-    inputBinding:
-      position: 0
-      prefix: '-a'
-  - id: c
-    type: int?
-    inputBinding:
-      position: 0
-      prefix: '-c'
-  - id: d
-    type: int?
-    inputBinding:
-      position: 0
-      prefix: '-d'
-  - id: k
-    type: int?
-    inputBinding:
-      position: 0
-      prefix: '-k'
-  - id: output
-    type: string?
-  - id: p
-    type: boolean?
-    inputBinding:
-      position: 0
-      prefix: '-p'
-  - id: r
-    type: float?
-    inputBinding:
-      position: 0
-      prefix: '-r'
-  - id: v
-    type: int?
-    inputBinding:
-      position: 0
-      prefix: '-v'
-  - id: w
-    type: int?
-    inputBinding:
-      position: 0
-      prefix: '-w'
-  - id: 'y'
-    type: int?
-    inputBinding:
-      position: 0
-      prefix: '-y'
-  - id: D
-    type: float?
-    inputBinding:
-      position: 0
-      prefix: '-D'
-  - id: W
-    type: int?
-    inputBinding:
-      position: 0
-      prefix: '-W'
-  - id: m
-    type: int?
-    inputBinding:
-      position: 0
-      prefix: '-m'
-  - id: e
-    type: boolean?
-    inputBinding:
-      position: 0
-      prefix: '-e'
-  - id: x
-    type: string?
-    inputBinding:
-      position: 0
-      prefix: '-x'
-  - id: H
+
+  fastq1:
     type:
-      - File?
-      - string?
+    - string
+    - File
     inputBinding:
-      position: 0
-      prefix: '-H'
-  - id: j
-    type: File?
+      position: 2
+
+  fastq2:
+    type:
+    - string
+    - File
     inputBinding:
-      position: 0
-      prefix: '-j'
-  - id: h
-    type: 'int[]?'
+      position: 2
+
+  output:
+    type: string
+
+  E:
+    type: ['null', string]
+    doc: INT gap extension penalty; a gap of size k cost {-O} + {-E}*k [1]
     inputBinding:
+      prefix: -E
       position: 0
-      prefix: '-h'
-      itemSeparator: ','
-  - id: V
-    type: boolean?
+
+  d:
+    type: ['null', string]
+    doc: INT off-diagonal X-dropoff [100]
     inputBinding:
+      prefix: -d
       position: 0
-      prefix: '-V'
-  - id: 'Y'
-    type: boolean?
+
+  A:
+    type: ['null', string]
+    doc: INT score for a sequence match [1]
     inputBinding:
+      prefix: -A
       position: 0
-      prefix: '-Y'
-  - id: I
-    type: string?
+
+  C:
+    type: ['null', boolean]
+    default: false
+    doc: append FASTA/FASTQ comment to SAM output
     inputBinding:
+      prefix: -C
       position: 0
-      prefix: '-M'
+
+  c:
+    type: ['null', string]
+    doc: INT skip seeds with more than INT occurrences [10000]
+    inputBinding:
+      prefix: -c
+      position: 0
+
+  B:
+    type: ['null', string]
+    doc: INT penalty for a mismatch [4]
+    inputBinding:
+      prefix: -B
+      position: 0
+
+  M:
+    type: ['null', boolean]
+    default: true
+    doc: mark shorter split hits as secondary (for Picard/GATK compatibility)
+    inputBinding:
+      prefix: -M
+      position: 0
+
+  L:
+    type: ['null', string]
+    doc: INT penalty for clipping [5]
+    inputBinding:
+      prefix: -L
+      position: 0
+
+  O:
+    type: ['null', string]
+    doc: INT gap open penalty [6]
+    inputBinding:
+      prefix: -O
+      position: 0
+
+  R:
+    type: ['null', string]
+    doc: STR read group header line such as '@RG\tID -foo\tSM -bar' [null]
+    inputBinding:
+      prefix: -R
+      position: 0
+
+  k:
+    type: ['null', string]
+    doc: INT minimum seed length [19]
+    inputBinding:
+      prefix: -k
+      position: 0
+
+  U:
+    type: ['null', string]
+    doc: INT penalty for an unpaired read pair [17]
+    inputBinding:
+      prefix: -U
+      position: 0
+
+  t:
+    type: ['null', string]
+    doc: INT number of threads [1]
+    inputBinding:
+      prefix: -t
+      position: 0
+    default: '6'
+
+  w:
+    type: ['null', string]
+    doc: INT band width for banded alignment [100]
+    inputBinding:
+      prefix: -w
+      position: 0
+
+  v:
+    type: ['null', string]
+    doc: INT verbose level - 1=error, 2=warning, 3=message, 4+=debugging [3]
+    inputBinding:
+      prefix: -v
+      position: 0
+
+  T:
+    type: ['null', string]
+    doc: INT minimum score to output [30]
+    inputBinding:
+      prefix: -T
+      position: 0
+
+  P:
+    type: ['null', boolean]
+    default: false
+    doc: skip pairing; mate rescue performed unless -S also in use
+    inputBinding:
+      prefix: -P
+      position: 0
+
+  S:
+    type: ['null', boolean]
+    default: false
+    doc: skip mate rescue
+    inputBinding:
+      prefix: -S
+      position: 0
+
+  r:
+    type: ['null', string]
+    doc: FLOAT look for internal seeds inside a seed longer than {-k} * FLOAT [1.5]
+    inputBinding:
+      prefix: -r
+      position: 0
+
+  a:
+    type: ['null', boolean]
+    default: false
+    doc: output all alignments for SE or unpaired PE
+    inputBinding:
+      prefix: -a
+      position: 0
+
+  p:
+    type: ['null', string]
+    doc: first query file consists of interleaved paired-end sequences
+    inputBinding:
+      prefix: -p
+      position: 0
+
+stdout: $(inputs.output)
 outputs:
-  - id: output_sam
+  sam:
     type: File
     outputBinding:
-      glob: '$(inputs.reads[0].basename.replace(''fastq.gz'', ''sam''))'
-arguments:
-  - position: 0
-    prefix: '-R'
-    valueFrom: >-
-      @RG\\tID:$(inputs.lane_id)\\tSM:$(inputs.sample_id)\\tLB:$(inputs.sample_id)\\tPL:Illumina
-  - position: 0
-    prefix: '-t'
-    valueFrom: $(runtime.cores)
-requirements:
-  - class: ResourceRequirement
-    ramMin: 32000
-    coresMin: 4
-  - class: DockerRequirement
-    dockerPull: 'mskcc/bwa_mem:0.7.12'
-  - class: InlineJavascriptRequirement
-stdout: '$(inputs.reads[0].basename.replace(''fastq.gz'', ''sam''))'
+      glob: |-
+        ${
+          if (inputs.output)
+            return inputs.output;
+          return null;
+        }
