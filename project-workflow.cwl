@@ -27,7 +27,6 @@ inputs:
         fp_genotypes: File
         conpair_markers: string
         conpair_markers_bed: string
-        pairing_file: File
   ref_fasta:
     type: File
     secondaryFiles:
