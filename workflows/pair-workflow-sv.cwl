@@ -373,7 +373,7 @@ steps:
          normal_sample_name:
              valueFrom: ${ return inputs.pair[1].ID }
          echoString:
-             valueFrom: ${ return inputs.normal_sample_name + "\t" + inputs.tumor_sample_name + "\n"; }
+             valueFrom: ${ return inputs.normal_sample_name + "\t" + inputs.tumor_sample_name; }
          output_filename:
              valueFrom: ${ return "tn_pairing_file.txt"; }
       out: [ pairfile ]
@@ -395,6 +395,8 @@ steps:
                           type: record
                           fields:
                               ID: string
+              tumor_sample_name: string
+              normal_sample_name: string
               echoString:
                   type: string
                   inputBinding:
