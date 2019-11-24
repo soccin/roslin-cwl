@@ -322,12 +322,8 @@ steps:
   create_pairing_file:
       in:
          pair: pair
-         tumor_sample_name:
-             valueFrom: ${ return inputs.pair[0].ID }
-         normal_sample_name:
-             valueFrom: ${ return inputs.pair[1].ID }
          echoString:
-             valueFrom: ${ return inputs.normal_sample_name + "\t" + inputs.tumor_sample_name + "\n"; }
+             valueFrom: ${ return inputs.pair[1].ID + "\t" + inputs.pair[0].ID + "\n"; }
          output_filename:
              valueFrom: ${ return "tn_pairing_file.txt"; }
       out: [ pairfile ]
