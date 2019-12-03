@@ -29,9 +29,6 @@ inputs:
         fp_genotypes: File
         conpair_markers: string
         conpair_markers_bed: string
-        grouping_file: File
-        request_file: File
-        pairing_file: File
   ref_fasta:
     type: File
     secondaryFiles:
@@ -295,6 +292,7 @@ steps:
         conpair_markers_bed:
           valueFrom: ${ return inputs.db_files.conpair_markers_bed }
     out: [bams,clstats1,clstats2,md_metrics,covint_list,bed,as_metrics,hs_metrics,insert_metrics,insert_pdf,per_target_coverage,qual_metrics,qual_pdf,doc_basecounts,gcbias_pdf,gcbias_metrics,gcbias_summary,conpair_pileup]
+
   variant_calling:
     run: ../modules/pair/variant-calling-pair.cwl
     in:
@@ -335,6 +333,7 @@ steps:
         complex_nn:
             valueFrom: ${ return inputs.runparams.complex_nn; }
     out: [combine_vcf, annotate_vcf, facets_png, facets_txt_hisens, facets_txt_purity, facets_out, facets_rdata, facets_seg, mutect_vcf, mutect_callstats, vardict_vcf, facets_counts, vardict_norm_vcf, mutect_norm_vcf]
+
   structural_variants:
     run: ../modules/pair/structural-variants-pair.cwl
     in:
@@ -365,6 +364,42 @@ steps:
         delly_type:
             valueFrom: ${ return inputs.runparams.delly_type; }
     out: [delly_sv,delly_filtered_sv,merged_file,merged_file_unfiltered,maf_file,portal_file]
+
+  create_pairing_file:
+      in:
+         pair: pair
+         echoString:
+             valueFrom: ${ return inputs.pair[1].ID + "\t" + inputs.pair[0].ID; }
+         output_filename:
+             valueFrom: ${ return "tn_pairing_file.txt"; }
+      out: [ pairfile ]
+      run:
+          class: CommandLineTool
+          baseCommand: ['echo', '-e']
+          id: create_TN_pair
+          stdout: $(inputs.output_filename)
+          requirements:
+              InlineJavascriptRequirement: {}
+              MultipleInputFeatureRequirement: {}
+              DockerRequirement:
+                  dockerPull: alpine:3.8
+          inputs:
+              pair:
+                  type:
+                      type: array
+                      items:
+                          type: record
+                          fields:
+                              ID: string
+              echoString:
+                  type: string
+                  inputBinding:
+                      position: 1
+              output_filename: string
+          outputs:
+              pairfile:
+                  type: stdout
+
   maf_processing:
     run: ../modules/pair/maf-processing-pair.cwl
     in:
@@ -372,6 +407,7 @@ steps:
         db_files: db_files
         bams: alignment/bams
         annotate_vcf: variant_calling/annotate_vcf
+        pairing_file: create_pairing_file/pairfile
         pair: pair
         genome:
             valueFrom: ${ return inputs.runparams.genome }
@@ -389,7 +425,5 @@ steps:
             valueFrom: ${ return inputs.pair[0].ID; }
         curated_bams: curated_bams
         hotspot_list:
-            valueFrom: ${ return inputs.db_files.hotspot_list }
-        pairing_file:
-            valueFrom: ${ return inputs.db_files.pairing_file }
+            valueFrom: ${ return inputs.db_files.hotspot_list } 
     out: [maf,portal_fillout]
