@@ -152,7 +152,7 @@ steps:
       in:
          pairs: pairs
          echoString:
-            valueFrom: ${ var pairString = inputs.pairs[0][1].ID + "\t" + inputs.pairs[0][0].ID; for (var i=1; i<inputs.pairs.length; i++) { pairString=pairString + "\n" + inputs.pair[i][1].ID + "\t" + inputs.pair[i][0].ID; } return pairString; }
+            valueFrom: ${ var pairString = inputs.pairs[0][1].ID + "\t" + inputs.pairs[0][0].ID; for (var i=1; i<inputs.pairs.length; i++) { pairString=pairString + "\n" + inputs.pairs[i][1].ID + "\t" + inputs.pairs[i][0].ID; } return pairString; }
          output_filename:
              valueFrom: ${ return "tn_pairing_file.txt"; }
       out: [ pairfile ]
