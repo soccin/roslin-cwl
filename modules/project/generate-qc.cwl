@@ -16,7 +16,6 @@ inputs:
       type: record
       fields:
         fp_genotypes: File
-        pairing_file: File
         hotspot_list_maf: File
         conpair_markers: string
   runparams:
@@ -148,6 +147,43 @@ outputs:
 
 
 steps:
+
+  create_pairing_file:
+      in:
+         pairs: pairs
+         echoString:
+            valueFrom: ${ var pairString = inputs.pairs[0][1].ID + "\t" + inputs.pairs[0][0].ID; for (var i=1; i<inputs.pairs.length; i++) { pairString=pairString + "\n" + inputs.pair[i][1].ID + "\t" + inputs.pair[i][0].ID; } return pairString; }
+         output_filename:
+             valueFrom: ${ return "tn_pairing_file.txt"; }
+      out: [ pairfile ]
+      run:
+          class: CommandLineTool
+          baseCommand: ['echo', '-e']
+          id: create_TN_pair
+          stdout: $(inputs.output_filename)
+          requirements:
+              InlineJavascriptRequirement: {}
+              MultipleInputFeatureRequirement: {}
+              DockerRequirement:
+                  dockerPull: alpine:3.8
+          inputs:
+              pairs:
+                  type:
+                      type: array
+                      items:
+                        type: array
+                        items:
+                          type: record
+                          fields:
+                              ID: string
+              echoString:
+                  type: string
+                  inputBinding:
+                      position: 1
+              output_filename: string
+          outputs:
+              pairfile:
+                  type: stdout
   run-contamination:
     run: ../../tools/conpair/0.3.3/conpair-contaminations.cwl
     in:
@@ -160,8 +196,7 @@ steps:
         valueFrom: ${ var output = []; for (var i=0; i<inputs.pileups.length; i++) { output=output.concat(inputs.pileups[i][0]); } return output; }
       markers:
         valueFrom: ${ return inputs.db_files.conpair_markers; }
-      pairing_file:
-        valueFrom: ${ return inputs.db_files.pairing_file; }
+      pairing_file: create_pairing_file/pairfile
       output_prefix:
         valueFrom: ${ return inputs.runparams.project_prefix; }
     out: [ outfiles, pdf ]
@@ -180,8 +215,7 @@ steps:
         valueFrom: ${ var output = []; for (var i=0; i<inputs.pileups.length; i++) { output=output.concat(inputs.pileups[i][0]); } return output; }
       markers:
         valueFrom: ${ return inputs.db_files.conpair_markers; }
-      pairing_file:
-        valueFrom: ${ return inputs.db_files.pairing_file; }
+      pairing_file: create_pairing_file/pairfile
       output_prefix:
         valueFrom: ${ return inputs.runparams.project_prefix + "_homo"; }
     out: [ outfiles, pdf ]
@@ -200,8 +234,7 @@ steps:
         valueFrom: ${ var output = []; for (var i=0; i<inputs.pileups.length; i++) { output=output.concat(inputs.pileups[i][0]); } return output; }
       markers:
         valueFrom: ${ return inputs.db_files.conpair_markers; }
-      pairing_file:
-        valueFrom: ${ return inputs.db_files.pairing_file; }
+      pairing_file: create_pairing_file/pairfile
       output_prefix:
         valueFrom: ${ return inputs.runparams.project_prefix + "_nohomo"; }
     out: [ outfiles, pdf ]
@@ -243,8 +276,7 @@ steps:
         valueFrom: ${ return inputs.runparams.project_prefix; }
       fp_genotypes:
         valueFrom: ${ return inputs.db_files.fp_genotypes }
-      pairing_file:
-        valueFrom: ${ return inputs.db_files.pairing_file }
+      pairing_file: create_pairing_file/pairfile
       hotspot_list_maf:
         valueFrom: ${ return inputs.db_files.hotspot_list_maf }
       genome:

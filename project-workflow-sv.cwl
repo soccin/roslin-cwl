@@ -326,6 +326,7 @@ steps:
       doc_basecounts: pair_process/doc_basecounts
       conpair_pileups: pair_process/conpair_pileups
       cdna_contam_output: run_cdna_contam_check/cdna_contam_output
+      pairs: pairs
       files:
         valueFrom: ${ return [inputs.cdna_contam_output]; }
       directories:
