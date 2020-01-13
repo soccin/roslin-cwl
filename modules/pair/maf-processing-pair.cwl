@@ -61,7 +61,7 @@ inputs:
         secondaryFiles:
             - ^.bai
     hotspot_list: string
-    pairing_file: File
+
 outputs:
     maf:
         type: File
@@ -70,6 +70,41 @@ outputs:
         type: File
         outputSource: fillout_tumor_normal/portal_fillout
 steps:
+    create_pairing_file:
+        in:
+            pair: pair
+            echoString:
+                valueFrom: ${ return inputs.pair[1].ID + "\t" + inputs.pair[0].ID; }
+            output_filename:
+                valueFrom: ${ return "tn_pairing_file.txt"; }
+        out: [ pairfile ]
+        run:
+            class: CommandLineTool
+            baseCommand: ['echo', '-e']
+            id: create_TN_pair
+            stdout: $(inputs.output_filename)
+            requirements:
+                InlineJavascriptRequirement: {}
+                MultipleInputFeatureRequirement: {}
+                DockerRequirement:
+                    dockerPull: alpine:3.8
+            inputs:
+                pair:
+                    type:
+                        type: array
+                        items:
+                            type: record
+                            fields:
+                                ID: string
+                echoString:
+                    type: string
+                    inputBinding:
+                        position: 1
+                output_filename: string
+            outputs:
+                pairfile:
+                    type: stdout
+
     vcf2maf:
         run: ../../tools/vcf2maf/1.6.17/vcf2maf.cwl
         in:
@@ -103,7 +138,7 @@ steps:
     fillout_tumor_normal:
         run: ../../tools/cmo-utils/1.9.15/cmo-fillout.cwl
         in:
-            pairing: pairing_file
+            pairing: create_pairing_file/pairfile
             maf: remove_variants/maf
             bams: bams
             ref_fasta: ref_fasta
