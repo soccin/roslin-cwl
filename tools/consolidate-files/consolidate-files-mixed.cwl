@@ -79,9 +79,7 @@ expression: |
 
     for (var i = 0; i < output_files.length; i++) {
       var output_file =  output_files[i];
-      console.log(output_file);
       var output_file_basename = output_file['basename'];
-      console.log(output_file_basename);
       if ( !(output_file_basename in output_file_basename_dict)){
         output_file_basename_dict[output_file_basename] = null;
         output_files_trimmed.push(output_file);
