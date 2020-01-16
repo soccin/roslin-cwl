@@ -304,6 +304,7 @@ steps:
       qual_metrics: pair_process/qual_metrics
       doc_basecounts: pair_process/doc_basecounts
       conpair_pileups: pair_process/conpair_pileups
+      pairs: pairs
       files:
         valueFrom: ${ return []; }
       directories:
