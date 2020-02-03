@@ -3,7 +3,7 @@ CWLs for the Roslin pipeline.
 
 The CWLs are categorized in multiple directories based on their unit of work, although the CWLs contained within can refer to other CWL directories via their relative path.
 
-For example, each CWL module that performs at the tumor-normal pair level are contained in the `modules/pair` directory; workflows that perform executions by chaining multiple modules are contained in the `workflows` directory. 
+For example, each CWL module that performs at the tumor-normal pair level are contained in the `modules/pair` directory; workflows that perform executions by chaining multiple modules are contained in the `workflows` directory. The CWLs in `workflows/` will reference CWLs in `modules/pair/` to perform their tasks, such as `alignment-pair.cwl` and `variant-calling.cwl`.
 
 ## Directories
 
