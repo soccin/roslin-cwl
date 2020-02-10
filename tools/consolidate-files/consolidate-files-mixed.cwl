@@ -11,6 +11,10 @@ inputs:
 
   output_directory_name: string
 
+  flatten_directories:
+    type: boolean
+    default: True
+
   files:
     type:
       type: array
@@ -39,7 +43,7 @@ outputs:
 # of supplied input files
 expression: |
   ${
-    function addFile(input_file_list) {
+    function addFile(input_file_list, flatten_directories) {
       var output_file_list = [];
       for (var i = 0; i < input_file_list.length; i++) {
         var input_file = input_file_list[i];
@@ -48,22 +52,27 @@ expression: |
             output_file_list.push(input_file);
           }
           else if ( input_file["class"] == "Directory" ){
-            output_file_list = output_file_list.concat(addDirectory([input_file]));
+            output_file_list = output_file_list.concat(addDirectory([input_file], flatten_directories));
           }
         }
       }
       return output_file_list;
     }
 
-    function addDirectory(input_directory_list) {
+    function addDirectory(input_directory_list, flatten_directories) {
       var output_file_list = [];
-      for (var i = 0; i < input_directory_list.length; i++) {
-         for (var j = 0; j < input_directory_list[i].listing.length; j++) {
-             var item = input_directory_list[i].listing[j];
-             if(item){
-              output_file_list = output_file_list.concat(addFile([item]));
-             }
-         }
+      if ( flatten_directories == true ){
+        for (var i = 0; i < input_directory_list.length; i++) {
+           for (var j = 0; j < input_directory_list[i].listing.length; j++) {
+               var item = input_directory_list[i].listing[j];
+               if(item){
+                output_file_list = output_file_list.concat(addFile([item]));
+               }
+           }
+        }
+      }
+      else {
+        output_file_list = input_directory_list;
       }
       return output_file_list;
     }
@@ -73,8 +82,8 @@ expression: |
     var output_file_basename_dict = {};
     var input_files = inputs.files.filter(single_file => String(single_file).toUpperCase() != 'NONE');
     var input_directories = inputs.directories.filter(single_file => String(single_file).toUpperCase() != 'NONE');
-    output_files = output_files.concat(addFile(input_files));
-    output_files = output_files.concat(addDirectory(input_directories));
+    output_files = output_files.concat(addFile(input_files, inputs.flatten_directories));
+    output_files = output_files.concat(addDirectory(input_directories, inputs.flatten_directories));
 
 
     for (var i = 0; i < output_files.length; i++) {
