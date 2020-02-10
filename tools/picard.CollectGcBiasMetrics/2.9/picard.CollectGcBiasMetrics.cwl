@@ -17,7 +17,7 @@ arguments:
 - valueFrom: "-Xms$(Math.round(parseInt(runtime.ram)/1910))G"
   position: 0
   shellQuote: false
-- valueFrom: "-Xmx$(Math.round(parseInt(runtime.ram)/955))G"
+- valueFrom: "-Xmx$(Math.floor(parseInt(runtime.ram)/1048) - 1)G"
   position: 0
   shellQuote: false
 - valueFrom: "-XX:-UseGCOverheadLimit"
