@@ -13,7 +13,7 @@ requirements:
     ramMin: 16000
     coresMin: 1
   DockerRequirement:
-    dockerPull: mskcc/roslin-variant-roslin-qc:0.6.3
+    dockerPull: mskcc/roslin-variant-roslin-qc:0.6.4
 
 doc: |
   None
