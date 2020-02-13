@@ -15,9 +15,7 @@ inputs:
   bams:
     type:
       type: array
-      items:
-        type: array
-        items: File
+      items: File
     secondaryFiles: [^.bai]
   md_metrics:
     type:
@@ -147,9 +145,7 @@ steps:
     run: ../cmo-utils/1.9.15/cmo-fillout.cwl
     in:
       maf: hotspot_list_maf
-      aa_bams: bams
-      bams:
-        valueFrom: ${ var output = [];  for (var i=0; i<inputs.aa_bams.length; i++) { output=output.concat(inputs.aa_bams[i]); } return output; }
+      bams: bams
       ref_fasta: ref_fasta
       output_format:
         valueFrom: ${ return "1"; }
