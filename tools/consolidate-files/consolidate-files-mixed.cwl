@@ -13,7 +13,7 @@ inputs:
 
   flatten_directories:
     type: boolean
-    default: True
+    default: true
 
   files:
     type:
@@ -66,7 +66,7 @@ expression: |
            for (var j = 0; j < input_directory_list[i].listing.length; j++) {
                var item = input_directory_list[i].listing[j];
                if(item){
-                output_file_list = output_file_list.concat(addFile([item]));
+                output_file_list = output_file_list.concat(addFile([item],flatten_directories));
                }
            }
         }

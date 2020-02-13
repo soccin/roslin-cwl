@@ -45,22 +45,6 @@ inputs:
         type: array
         items: File
     secondaryFiles: [^.bai]
-  clstats1:
-    type:
-      type: array
-      items:
-        type: array
-        items:
-          type: array
-          items: File
-  clstats2:
-    type:
-      type: array
-      items:
-        type: array
-        items:
-          type: array
-          items: File
   md_metrics:
     type:
       type: array
@@ -260,8 +244,6 @@ steps:
       runparams: runparams
       ref_fasta: ref_fasta
       db_files: db_files
-      clstats1: clstats1
-      clstats2: clstats2
       bams:
         valueFrom: ${ var output = [];  for (var i=0; i<inputs.aa_bams.length; i++) { output=output.concat(inputs.aa_bams[i]); } return output; }
       grouping_list:
