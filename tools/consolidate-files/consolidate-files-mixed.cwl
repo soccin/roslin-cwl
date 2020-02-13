@@ -13,7 +13,7 @@ inputs:
 
   flatten_directories:
     type: boolean
-    default: True
+    default: true
 
   files:
     type:
