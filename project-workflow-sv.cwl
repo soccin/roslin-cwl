@@ -300,17 +300,8 @@ steps:
     scatter: [pair]
     scatterMethod: dotproduct
 
-  run_cdna_contam_check:
-    run: tools/roslin-qc/create-cdna-contam.cwl
-    in:
-      runparams: runparams
-      input_mafs: pair_process/maf_file
-      project_prefix:
-        valueFrom: ${ return inputs.runparams.project_prefix; }
-    out: [ cdna_contam_output ]
-
   generate_qc:
-    run: modules/project/generate-qc.cwl
+    run: modules/project/generate-qc-sv.cwl
     in:
       db_files: db_files
       runparams: runparams
@@ -325,10 +316,9 @@ steps:
       qual_metrics: pair_process/qual_metrics
       doc_basecounts: pair_process/doc_basecounts
       conpair_pileups: pair_process/conpair_pileups
-      cdna_contam_output: run_cdna_contam_check/cdna_contam_output
-      pairs: pairs
+      mafs: pair_process/maf_file
       files:
-        valueFrom: ${ return [inputs.cdna_contam_output]; }
+        valueFrom: ${ return []; }
       directories:
         valueFrom: ${ return []; }
     out: [consolidated_results,qc_pdf]
