@@ -957,12 +957,6 @@ inputs:
       prefix: --downsample_to_coverage
       position: 2
 
-  downsampling_type:
-    type: ['null', string]
-    default: NONE
-    inputBinding:
-      prefix: --downsampling_type
-      position: 2
 
 outputs:
   output:
