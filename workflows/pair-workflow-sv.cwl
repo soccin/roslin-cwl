@@ -97,11 +97,13 @@ inputs:
         complex_nn: float
         delly_type: string[]
         project_prefix: string
+        assay: string
+        pi: string
+        pi_email: string
         opt_dup_pix_dist: string
         facets_pcval: int
         facets_cval: int
         abra_ram_min: int
-        scripts_bin: string
         gatk_jar_path: string
   pair:
     type:
@@ -127,11 +129,16 @@ inputs:
 outputs:
 
   # bams & metrics
-  bams:
-    type: File[]
+  normal_bam:
+    type: File
     secondaryFiles:
       - ^.bai
-    outputSource: alignment/bams
+    outputSource: format_output/normal_bam
+  tumor_bam:
+    type: File
+    secondaryFiles:
+      - ^.bai
+    outputSource: format_output/tumor_bam
   clstats1:
     type:
       type: array
@@ -254,6 +261,30 @@ outputs:
   maf:
     type: File
     outputSource: maf_processing/maf
+
+  # info
+
+  genome:
+    type: string
+    outputSource: format_output/genome
+  assay:
+    type: string
+    outputSource: format_output/assay
+  pi:
+    type: string
+    outputSource: format_output/pi
+  project_prefix:
+    type: string
+    outputSource: format_output/project_prefix
+  pi_email:
+    type: string
+    outputSource: format_output/pi_email
+  normal_sample_name:
+    type: string
+    outputSource: format_output/normal_sample_name
+  tumor_sample_name:
+    type: string
+    outputSource: format_output/tumor_sample_name
 
 steps:
 
@@ -390,3 +421,10 @@ steps:
         hotspot_list:
             valueFrom: ${ return inputs.db_files.hotspot_list }
     out: [maf,portal_fillout]
+  format_output:
+    run: ../tools/format-output/pair-output.cwl
+    in:
+      runparams: runparams
+      pair: pair
+      bams: alignment/bams
+    out: [ genome, assay, pi, pi_email, project_prefix, normal_sample_name, tumor_sample_name, normal_bam, tumor_bam ]

@@ -96,11 +96,13 @@ inputs:
         complex_nn: float
         delly_type: string[]
         project_prefix: string
+        assay: string
+        pi: string
+        pi_email: string
         opt_dup_pix_dist: string
         facets_pcval: int
         facets_cval: int
         abra_ram_min: int
-        scripts_bin: string
         gatk_jar_path: string
   pair:
     type:
@@ -126,11 +128,16 @@ inputs:
 outputs:
 
   # bams & metrics
-  bams:
-    type: File[]
+  normal_bam:
+    type: File
     secondaryFiles:
       - ^.bai
-    outputSource: alignment/bams
+    outputSource: format_output/normal_bam
+  tumor_bam:
+    type: File
+    secondaryFiles:
+      - ^.bai
+    outputSource: format_output/tumor_bam
   clstats1:
     type:
       type: array
@@ -241,6 +248,29 @@ outputs:
     type: File
     outputSource: maf_processing/maf
 
+  # info
+  genome:
+    type: string
+    outputSource: format_output/genome
+  assay:
+    type: string
+    outputSource: format_output/assay
+  pi:
+    type: string
+    outputSource: format_output/pi
+  project_prefix:
+    type: string
+    outputSource: format_output/project_prefix
+  pi_email:
+    type: string
+    outputSource: format_output/pi_email
+  normal_sample_name:
+    type: string
+    outputSource: format_output/normal_sample_name
+  tumor_sample_name:
+    type: string
+    outputSource: format_output/tumor_sample_name
+
 steps:
 
   alignment:
@@ -281,66 +311,74 @@ steps:
   variant_calling:
     run: ../modules/pair/variant-calling-pair.cwl
     in:
-        runparams: runparams
-        db_files: db_files
-        bams: alignment/bams
-        pair: pair
-        normal_bam:
-            valueFrom: ${ return inputs.bams[1]; }
-        tumor_bam:
-            valueFrom: ${ return inputs.bams[0]; }
-        genome:
-            valueFrom: ${ return inputs.runparams.genome }
-        bed: alignment/bed
-        normal_sample_name:
-            valueFrom: ${ return inputs.pair[1].ID; }
-        tumor_sample_name:
-            valueFrom: ${ return inputs.pair[0].ID; }
-        dbsnp: dbsnp
-        cosmic: cosmic
-        mutect_dcov:
-            valueFrom: ${ return inputs.runparams.mutect_dcov }
-        mutect_rf:
-            valueFrom: ${ return inputs.runparams.mutect_rf }
-        refseq:
-            valueFrom: ${ return inputs.db_files.refseq }
-        hotspot_vcf:
-            valueFrom: ${ return inputs.db_files.hotspot_vcf }
-        ref_fasta: ref_fasta
-        facets_pcval:
-            valueFrom: ${ return inputs.runparams.facets_pcval }
-        facets_cval:
-            valueFrom: ${ return inputs.runparams.facets_cval }
-        facets_snps:
-            valueFrom: ${ return inputs.db_files.facets_snps }
-        complex_tn:
-            valueFrom: ${ return inputs.runparams.complex_tn; }
-        complex_nn:
-            valueFrom: ${ return inputs.runparams.complex_nn; }
+      runparams: runparams
+      db_files: db_files
+      bams: alignment/bams
+      pair: pair
+      normal_bam:
+          valueFrom: ${ return inputs.bams[1]; }
+      tumor_bam:
+          valueFrom: ${ return inputs.bams[0]; }
+      genome:
+          valueFrom: ${ return inputs.runparams.genome }
+      bed: alignment/bed
+      normal_sample_name:
+          valueFrom: ${ return inputs.pair[1].ID; }
+      tumor_sample_name:
+          valueFrom: ${ return inputs.pair[0].ID; }
+      dbsnp: dbsnp
+      cosmic: cosmic
+      mutect_dcov:
+          valueFrom: ${ return inputs.runparams.mutect_dcov }
+      mutect_rf:
+          valueFrom: ${ return inputs.runparams.mutect_rf }
+      refseq:
+          valueFrom: ${ return inputs.db_files.refseq }
+      hotspot_vcf:
+          valueFrom: ${ return inputs.db_files.hotspot_vcf }
+      ref_fasta: ref_fasta
+      facets_pcval:
+          valueFrom: ${ return inputs.runparams.facets_pcval }
+      facets_cval:
+          valueFrom: ${ return inputs.runparams.facets_cval }
+      facets_snps:
+          valueFrom: ${ return inputs.db_files.facets_snps }
+      complex_tn:
+          valueFrom: ${ return inputs.runparams.complex_tn; }
+      complex_nn:
+          valueFrom: ${ return inputs.runparams.complex_nn; }
     out: [combine_vcf, annotate_vcf, facets_png, facets_txt_hisens, facets_txt_purity, facets_out, facets_rdata, facets_seg, mutect_vcf, mutect_callstats, vardict_vcf, facets_counts, vardict_norm_vcf, mutect_norm_vcf]
   maf_processing:
     run: ../modules/pair/maf-processing-pair.cwl
     in:
-        runparams: runparams
-        db_files: db_files
-        bams: alignment/bams
-        annotate_vcf: variant_calling/annotate_vcf
-        pair: pair
-        genome:
-            valueFrom: ${ return inputs.runparams.genome }
-        ref_fasta: ref_fasta
-        vep_path:
-            valueFrom: ${ return inputs.db_files.vep_path }
-        custom_enst:
-            valueFrom: ${ return inputs.db_files.custom_enst }
-        exac_filter: exac_filter
-        vep_data:
-            valueFrom: ${ return inputs.db_files.vep_data }
-        normal_sample_name:
-            valueFrom: ${ return inputs.pair[1].ID; }
-        tumor_sample_name:
-            valueFrom: ${ return inputs.pair[0].ID; }
-        curated_bams: curated_bams
-        hotspot_list:
-            valueFrom: ${ return inputs.db_files.hotspot_list }
+      runparams: runparams
+      db_files: db_files
+      bams: alignment/bams
+      annotate_vcf: variant_calling/annotate_vcf
+      pair: pair
+      genome:
+          valueFrom: ${ return inputs.runparams.genome }
+      ref_fasta: ref_fasta
+      vep_path:
+          valueFrom: ${ return inputs.db_files.vep_path }
+      custom_enst:
+          valueFrom: ${ return inputs.db_files.custom_enst }
+      exac_filter: exac_filter
+      vep_data:
+          valueFrom: ${ return inputs.db_files.vep_data }
+      normal_sample_name:
+          valueFrom: ${ return inputs.pair[1].ID; }
+      tumor_sample_name:
+          valueFrom: ${ return inputs.pair[0].ID; }
+      curated_bams: curated_bams
+      hotspot_list:
+          valueFrom: ${ return inputs.db_files.hotspot_list }
     out: [maf,portal_fillout]
+  format_output:
+    run: ../tools/format-output/pair-output.cwl
+    in:
+      runparams: runparams
+      pair: pair
+      bams: alignment/bams
+    out: [ genome, assay, pi, pi_email, project_prefix, normal_sample_name, tumor_sample_name, normal_bam, tumor_bam ]
+
