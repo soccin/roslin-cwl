@@ -110,7 +110,7 @@ steps:
         normal_sample_names: normal_sample_names
         tumor_sample_names: tumor_sample_names
         echoString:
-          valueFrom: ${ var pairString = inputs.normal_sample_names[0] + "\t" + inputs.tumor_sample_names[0]; for (var i=1; i<inputs.pairs.length; i++) { pairString=pairString + "\n" + inputs.normal_sample_names[i] + "\t" + inputs.tumor_sample_names[i]; } return pairString; }
+          valueFrom: ${ var pairString = inputs.normal_sample_names[0] + "\t" + inputs.tumor_sample_names[0]; for (var i=1; i<inputs.normal_sample_names.length; i++) { pairString=pairString + "\n" + inputs.normal_sample_names[i] + "\t" + inputs.tumor_sample_names[i]; } return pairString; }
         output_filename:
           valueFrom: ${ return "tn_pairing_file.txt"; }
       out: [ pairfile ]
