@@ -11,23 +11,6 @@ requirements:
 
 inputs:
 
-  db_files:
-    type:
-      type: record
-      fields:
-        fp_genotypes: File
-        hotspot_list_maf: File
-        conpair_markers: string
-  runparams:
-    type:
-      type: record
-      fields:
-        project_prefix: string
-        genome: string
-        scripts_bin: string
-        assay: string
-        pi: string
-        pi_email: string
   ref_fasta:
     type: File
     secondaryFiles:
@@ -38,13 +21,26 @@ inputs:
       - .sa
       - .fai
       - ^.dict
-  bams:
+  normal_bams:
     type:
       type: array
-      items:
-        type: array
-        items: File
+      items: File
     secondaryFiles: [^.bai]
+  tumor_bams:
+    type:
+      type: array
+      items: File
+    secondaryFiles: [^.bai]
+  normal_sample_names: string[]
+  tumor_sample_names: string[]
+  project_prefix: string
+  genome: string
+  assay: string
+  pi: string
+  pi_email: string
+  fp_genotypes: File
+  hotspot_list_maf: File
+  conpair_markers: string
   md_metrics:
     type:
       type: array
@@ -95,29 +91,6 @@ inputs:
     type:
       type: array
       items: File
-  pairs:
-    type:
-      type: array
-      items:
-        type: array
-        items:
-          type: record
-          fields:
-            CN: string
-            LB: string
-            ID: string
-            PL: string
-            PU: string[]
-            R1: File[]
-            R2: File[]
-            zR1: File[]
-            zR2: File[]
-            bam: File[]
-            RG_ID: string[]
-            group: string
-            adapter: string
-            adapter2: string
-            bwa_output: string
 
 
 outputs:
@@ -134,55 +107,45 @@ steps:
 
   create_pairing_file:
       in:
-         pairs: pairs
-         echoString:
-            valueFrom: ${ var pairString = inputs.pairs[0][1].ID + "\t" + inputs.pairs[0][0].ID; for (var i=1; i<inputs.pairs.length; i++) { pairString=pairString + "\n" + inputs.pairs[i][1].ID + "\t" + inputs.pairs[i][0].ID; } return pairString; }
-         output_filename:
-             valueFrom: ${ return "tn_pairing_file.txt"; }
+        normal_sample_names: normal_sample_names
+        tumor_sample_names: tumor_sample_names
+        echoString:
+          valueFrom: ${ var pairString = inputs.normal_sample_names[0] + "\t" + inputs.tumor_sample_names[0]; for (var i=1; i<inputs.normal_sample_names.length; i++) { pairString=pairString + "\n" + inputs.normal_sample_names[i] + "\t" + inputs.tumor_sample_names[i]; } return pairString; }
+        output_filename:
+          valueFrom: ${ return "tn_pairing_file.txt"; }
       out: [ pairfile ]
       run:
-          class: CommandLineTool
-          baseCommand: ['echo', '-e']
-          id: create_TN_pair
-          stdout: $(inputs.output_filename)
-          requirements:
-              InlineJavascriptRequirement: {}
-              MultipleInputFeatureRequirement: {}
-              DockerRequirement:
-                  dockerPull: alpine:3.8
-          inputs:
-              pairs:
-                  type:
-                      type: array
-                      items:
-                        type: array
-                        items:
-                          type: record
-                          fields:
-                              ID: string
-              echoString:
-                  type: string
-                  inputBinding:
-                      position: 1
-              output_filename: string
-          outputs:
-              pairfile:
-                  type: stdout
+        class: CommandLineTool
+        baseCommand: ['echo', '-e']
+        id: create_TN_pair
+        stdout: $(inputs.output_filename)
+        requirements:
+          InlineJavascriptRequirement: {}
+          MultipleInputFeatureRequirement: {}
+          DockerRequirement:
+            dockerPull: alpine:3.8
+        inputs:
+          normal_sample_names: string[]
+          tumor_sample_names: string[]
+          echoString:
+            type: string
+            inputBinding:
+              position: 1
+          output_filename: string
+        outputs:
+          pairfile:
+            type: stdout
   run-contamination:
     run: ../../tools/conpair/0.3.3/conpair-contaminations.cwl
     in:
-      runparams: runparams
-      db_files: db_files
       pileups: conpair_pileups
       npileup:
         valueFrom: ${ var output = []; for (var i=0; i<inputs.pileups.length; i++) { output=output.concat(inputs.pileups[i][1]); } return output; }
       tpileup:
         valueFrom: ${ var output = []; for (var i=0; i<inputs.pileups.length; i++) { output=output.concat(inputs.pileups[i][0]); } return output; }
-      markers:
-        valueFrom: ${ return inputs.db_files.conpair_markers; }
+      markers: conpair_markers
       pairing_file: create_pairing_file/pairfile
-      output_prefix:
-        valueFrom: ${ return inputs.runparams.project_prefix; }
+      output_prefix: project_prefix
     out: [ outfiles, pdf ]
 
   run-concordance:
@@ -190,18 +153,16 @@ steps:
     in:
       normal_homozygous:
         valueFrom: ${ return true; }
-      runparams: runparams
-      db_files: db_files
       pileups: conpair_pileups
       npileup:
         valueFrom: ${ var output = []; for (var i=0; i<inputs.pileups.length; i++) { output=output.concat(inputs.pileups[i][1]); } return output; }
       tpileup:
         valueFrom: ${ var output = []; for (var i=0; i<inputs.pileups.length; i++) { output=output.concat(inputs.pileups[i][0]); } return output; }
-      markers:
-        valueFrom: ${ return inputs.db_files.conpair_markers; }
+      markers: conpair_markers
       pairing_file: create_pairing_file/pairfile
+      project_prefix: project_prefix
       output_prefix:
-        valueFrom: ${ return inputs.runparams.project_prefix + "_homo"; }
+        valueFrom: ${ return inputs.project_prefix + "_homo"; }
     out: [ outfiles, pdf ]
 
   run-concordance-non-homozygous:
@@ -209,18 +170,16 @@ steps:
     in:
       normal_homozygous:
         valueFrom: ${ return false; }
-      runparams: runparams
-      db_files: db_files
       pileups: conpair_pileups
       npileup:
         valueFrom: ${ var output = []; for (var i=0; i<inputs.pileups.length; i++) { output=output.concat(inputs.pileups[i][1]); } return output; }
       tpileup:
         valueFrom: ${ var output = []; for (var i=0; i<inputs.pileups.length; i++) { output=output.concat(inputs.pileups[i][0]); } return output; }
-      markers:
-        valueFrom: ${ return inputs.db_files.conpair_markers; }
+      markers: conpair_markers
       pairing_file: create_pairing_file/pairfile
+      project_prefix: project_prefix
       output_prefix:
-        valueFrom: ${ return inputs.runparams.project_prefix + "_nohomo"; }
+        valueFrom: ${ return inputs.project_prefix + "_nohomo"; }
     out: [ outfiles, pdf ]
 
   put-conpair-files-into-directory:
@@ -239,41 +198,32 @@ steps:
   qc_merge_and_hotspots:
     run: ../../tools/roslin-qc/qc-merge-and-hotspots.cwl
     in:
-      aa_bams: bams
-      pairs: pairs
-      runparams: runparams
+      normal_bams: normal_bams
+      tumor_bams: tumor_bams
+      normal_sample_names: normal_sample_names
+      tumor_sample_names: tumor_sample_names
       ref_fasta: ref_fasta
-      db_files: db_files
       bams:
-        valueFrom: ${ var output = [];  for (var i=0; i<inputs.aa_bams.length; i++) { output=output.concat(inputs.aa_bams[i]); } return output; }
+        valueFrom: ${ var output = [];  for (var i=0; i<inputs.normal_bams.length; i++) { output=output.concat(inputs.normal_bams[i]); } for (var i=0; i<inputs.tumor_bams.length; i++) { output=output.concat(inputs.tumor_bams[i]); } return output; }
       grouping_list:
-        valueFrom: ${ var output = [];  for (var i=0; i<inputs.pairs.length; i++) {  for (var j=0; j<inputs.pairs[i].length; j++) { var singleSample = inputs.pairs[i][j]["ID"] + ":" + inputs.pairs[i][j]["group"]; output=output.concat(singleSample); } } return output; }
+        valueFrom: ${ var output = []; var group=0; for (var i=0; i<inputs.normal_sample_names.length; i++) { var singleSample = inputs.normal_sample_names[i] + ":" + group.toString(); output=output.concat(singleSample); group++; } for (var i=0; i<inputs.tumor_sample_names.length; i++) { var singleSample = inputs.tumor_sample_names[i] + ":" + group.toString(); output=output.concat(singleSample); group++; } return output; }
       hs_metrics: hs_metrics
       md_metrics: md_metrics
       per_target_coverage: per_target_coverage
       insert_metrics: insert_metrics
       doc_basecounts: doc_basecounts
       qual_metrics: qual_metrics
-      project_prefix:
-        valueFrom: ${ return inputs.runparams.project_prefix; }
-      fp_genotypes:
-        valueFrom: ${ return inputs.db_files.fp_genotypes }
+      project_prefix: project_prefix
+      fp_genotypes: fp_genotypes
       pairing_file: create_pairing_file/pairfile
-      hotspot_list_maf:
-        valueFrom: ${ return inputs.db_files.hotspot_list_maf }
-      genome:
-        valueFrom: ${ return inputs.runparams.genome; }
+      hotspot_list_maf: hotspot_list_maf
+      genome: genome
     out: [ qc_merged_directory ]
   generate_images:
     run: ../../tools/roslin-qc/generate-images.cwl
     in:
-      runparams: runparams
-      db_files: db_files
       data_dir:  qc_merge_and_hotspots/qc_merged_directory
-      bin:
-        valueFrom: ${ return inputs.runparams.scripts_bin; }
-      file_prefix:
-        valueFrom: ${ return inputs.runparams.project_prefix; }
+      file_prefix: project_prefix
     out: [ output, images_directory, project_summary, sample_summary ]
   consolidate_results:
     run: ../../tools/consolidate-files/consolidate-files-mixed.cwl
@@ -291,15 +241,9 @@ steps:
   generate_qc:
     run: ../../tools/roslin-qc/genlatex.cwl
     in:
-      runparams: runparams
-      db_files: db_files
       data_dir: consolidate_results/directory
-      assay:
-        valueFrom: ${ return inputs.runparams.assay }
-      pi:
-        valueFrom: ${ return inputs.runparams.pi }
-      pi_email:
-        valueFrom: ${ return inputs.runparams.pi_email }
-      project_prefix:
-        valueFrom: ${ return inputs.runparams.project_prefix; }
+      assay: assay
+      pi: pi
+      pi_email: pi_email
+      project_prefix: project_prefix
     out: [ qc_pdf ]
