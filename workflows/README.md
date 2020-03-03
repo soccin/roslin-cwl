@@ -16,3 +16,7 @@ This workflow scatters a tumor-normal pair of samples into two separate `sample-
 ### pair-workflow-sv.cwl
 
 Performs the same methods as `pair-workflow.cwl`, except it adds structural variant calling with `delly`.
+
+### copy-outputs.cwl
+
+Reorganizes the output of the pair workflows into a delivery friendly output structure
