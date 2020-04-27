@@ -239,7 +239,7 @@ steps:
         linkMerge: merge_flattened
       output_directory_name:
         valueFrom: ${ return "intermediate_metrics"; }
-    out: [ intermediate_directory ]    
+    out: [ directory ]    
   consolidate_results:
     run: ../../tools/consolidate-files/consolidate-files-mixed.cwl
     in:
@@ -249,7 +249,7 @@ steps:
       conpair_directory: put-conpair-files-into-directory/directory
       qc_merged_and_hotspots_directory: qc_merge_and_hotspots/qc_merged_directory
       generate_images_directory: generate_images/output
-      intermediate_directory: consolidate_intermediate_files/intermediate_directory
+      intermediate_directory: consolidate_intermediate_files/directory
       files: files
       directories:
         valueFrom: ${ var metrics_data = [inputs.qc_merged_and_hotspots_directory, inputs.generate_images_directory, inputs.conpair_directory, inputs.intermediate_directory]; return metrics_data.concat(inputs.input_directories); }
