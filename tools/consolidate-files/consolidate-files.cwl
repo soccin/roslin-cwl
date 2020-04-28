@@ -18,6 +18,7 @@ inputs:
         - File
         - string
         - 'null'
+    default: []
   
   file_lists:
     type:
@@ -28,6 +29,7 @@ inputs:
           - File
           - string
           - 'null'
+    default: []
 
 
 outputs:
