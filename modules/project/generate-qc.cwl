@@ -235,8 +235,7 @@ steps:
       doc_basecounts: doc_basecounts
       qual_metrics: qual_metrics
       file_lists:
-        source: [ hs_metrics, md_metrics, per_target_coverage, insert_metrics, doc_basecounts, qual_metrics]
-        linkMerge: merge_flattened
+        valueFrom: ${ var output = []; output=output.concat(inputs.hs_metrics, inputs.md_metrics, inputs.per_target_coverage, inputs.insert_metrics, inputs.doc_basecounts, inputs.qual_metrics); return output; }
       output_directory_name:
         valueFrom: ${ return "intermediate_metrics"; }
     out: [ directory ]    
