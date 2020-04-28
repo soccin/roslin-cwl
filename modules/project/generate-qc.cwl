@@ -234,7 +234,7 @@ steps:
       insert_metrics: insert_metrics
       doc_basecounts: doc_basecounts
       qual_metrics: qual_metrics
-      files:
+      file_lists:
         source: [ hs_metrics, md_metrics, per_target_coverage, insert_metrics, doc_basecounts, qual_metrics]
         linkMerge: merge_flattened
       output_directory_name:
