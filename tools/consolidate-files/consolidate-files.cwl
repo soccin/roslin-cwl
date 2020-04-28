@@ -29,7 +29,7 @@ inputs:
           - File
           - string
           - 'null'
-    default: []
+    default: [[]]
 
 
 outputs:
