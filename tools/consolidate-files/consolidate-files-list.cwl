@@ -45,12 +45,10 @@ expression: |
     }
     for (var i = 0; i < inputs.file_lists.length; i++) {
       if(inputs.file_lists[i]){
-        output_files_list.push(addFile(inputs.file_lists[i]));
+        output_files_list = output_files_list.concat(addFile(inputs.file_lists[i]));
       }
 
     }
-
-    output_files_list = output_files_list.flat()
 
     return {
       'directory': {
