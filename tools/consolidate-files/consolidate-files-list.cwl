@@ -50,6 +50,8 @@ expression: |
 
     }
 
+    output_files_list = output_files_list.flat()
+
     return {
       'directory': {
         'class': 'Directory',
