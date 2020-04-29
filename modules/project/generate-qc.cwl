@@ -240,16 +240,27 @@ steps:
     run: ../../tools/consolidate-files/consolidate-files-mixed.cwl
     in:
       output_directory_name:
-        valueFrom: ${ return "consolidated_metrics_data"; }
+        valueFrom: ${ return "consolidated_metrics"; }
       input_directories: directories
       conpair_directory: put-conpair-files-into-directory/directory
       qc_merged_and_hotspots_directory: qc_merge_and_hotspots/qc_merged_directory
       generate_images_directory: generate_images/output
-      intermediate_directory: consolidate_intermediate_files/directory
       files: files
       directories:
-        valueFrom: ${ var metrics_data = [inputs.qc_merged_and_hotspots_directory, inputs.generate_images_directory, inputs.conpair_directory, inputs.intermediate_directory]; return metrics_data.concat(inputs.input_directories); }
+        valueFrom: ${ var metrics_data = [inputs.qc_merged_and_hotspots_directory, inputs.generate_images_directory, inputs.conpair_directory]; return metrics_data.concat(inputs.input_directories); }
     out: [ directory ]
+  consolidate_metrics:
+    run: ../../tools/consolidate-files/consolidate-files-mixed.cwl
+    in:
+      consolidated_metrics: consolidate_intermediate_files/directory
+      consolidated_results: consolidate_results/directory
+      output_directory_name:
+        valueFrom: ${ return "qc_metrics"; }
+      directories:
+        valueFrom: ${ return [inputs.consolidated_metrics, inputs.consolidated_results]}
+      flatten_directories:
+        valueFrom: ${ return false; }
+    out: [directory]
   generate_qc:
     run: ../../tools/roslin-qc/genlatex.cwl
     in:
