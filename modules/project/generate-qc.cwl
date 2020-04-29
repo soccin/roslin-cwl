@@ -232,7 +232,7 @@ steps:
       doc_basecounts: doc_basecounts
       qual_metrics: qual_metrics
       file_lists:
-        valueFrom: ${ var output = []; output=output.concat(inputs.hs_metrics, inputs.md_metrics, inputs.per_target_coverage, inputs.insert_metrics, inputs.doc_basecounts, inputs.qual_metrics); return output; }
+        valueFrom: ${ var intermediate_metrics = []; intermediate_metrics=intermediate_metrics.concat(inputs.hs_metrics, inputs.md_metrics, inputs.per_target_coverage, inputs.insert_metrics, inputs.doc_basecounts, inputs.qual_metrics); return intermediate_metrics; }
       output_directory_name:
         valueFrom: ${ return "intermediate_metrics"; }
     out: [ directory ]
