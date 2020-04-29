@@ -29,14 +29,14 @@ outputs:
 
 # This tool returns a Directory object,
 # which holds all output files from the list
-# of supplied input files
+# of supplied input file_lists
 expression: |
   ${
     var output_files_list = [];
     function addFile(input_file_list) {
       var output_files = [];
       var input_files = input_file_list.filter(single_file => String(single_file).toUpperCase() != 'NONE');
-      for (var i = 0; i < inputs.files.length; i++) {
+      for (var i = 0; i < input_file_list.length; i++) {
         if(input_files[i]){
           output_files.push(input_file_list[i]);
         }
