@@ -226,7 +226,7 @@ steps:
       file_prefix: project_prefix
     out: [ output, images_directory, project_summary, sample_summary ]
   consolidate_intermediate_files:
-    run: ../../tools/consolidate-files/consolidate-files.cwl
+    run: ../../tools/consolidate-files/consolidate-files-list.cwl
     in:
       hs_metrics: hs_metrics
       md_metrics: md_metrics
