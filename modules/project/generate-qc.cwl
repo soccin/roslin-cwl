@@ -185,9 +185,6 @@ steps:
   put-conpair-files-into-directory:
     run: ../../tools/conpair/0.3.3/consolidate-conpair-files.cwl
     in:
-      concordance_files: run-concordance/outfiles
-      concordance_files_nohomo: run-concordance-non-homozygous/outfiles
-      contamination_files: run-contamination/outfiles
       files:
         source: [ run-concordance/outfiles, run-concordance-non-homozygous/outfiles, run-contamination/outfiles ]
         linkMerge: merge_flattened
