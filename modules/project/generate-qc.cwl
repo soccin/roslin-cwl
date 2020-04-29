@@ -97,7 +97,7 @@ outputs:
 
   consolidated_results:
     type: Directory
-    outputSource: consolidate_results/directory
+    outputSource: consolidate_metrics/directory
   qc_pdf:
     type: File
     outputSource: generate_qc/qc_pdf
