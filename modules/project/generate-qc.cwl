@@ -97,7 +97,7 @@ outputs:
 
   consolidated_results:
     type: Directory
-    outputSource: consolidate_results/directory
+    outputSource: consolidate_metrics/directory
   qc_pdf:
     type: File
     outputSource: generate_qc/qc_pdf
@@ -185,9 +185,6 @@ steps:
   put-conpair-files-into-directory:
     run: ../../tools/conpair/0.3.3/consolidate-conpair-files.cwl
     in:
-      concordance_files: run-concordance/outfiles
-      concordance_files_nohomo: run-concordance-non-homozygous/outfiles
-      contamination_files: run-contamination/outfiles
       files:
         source: [ run-concordance/outfiles, run-concordance-non-homozygous/outfiles, run-contamination/outfiles ]
         linkMerge: merge_flattened
@@ -225,19 +222,45 @@ steps:
       data_dir:  qc_merge_and_hotspots/qc_merged_directory
       file_prefix: project_prefix
     out: [ output, images_directory, project_summary, sample_summary ]
+  consolidate_intermediate_files:
+    run: ../../tools/consolidate-files/consolidate-files-list.cwl
+    in:
+      hs_metrics: hs_metrics
+      md_metrics: md_metrics
+      per_target_coverage: per_target_coverage
+      insert_metrics: insert_metrics
+      doc_basecounts: doc_basecounts
+      qual_metrics: qual_metrics
+      file_lists:
+        valueFrom: ${ var intermediate_metrics = []; intermediate_metrics=intermediate_metrics.concat(inputs.hs_metrics, inputs.md_metrics, inputs.per_target_coverage, inputs.insert_metrics, inputs.doc_basecounts, inputs.qual_metrics); return intermediate_metrics; }
+      output_directory_name:
+        valueFrom: ${ return "intermediate_metrics"; }
+    out: [ directory ]
   consolidate_results:
     run: ../../tools/consolidate-files/consolidate-files-mixed.cwl
     in:
       output_directory_name:
-        valueFrom: ${ return "consolidated_metrics_data"; }
+        valueFrom: ${ return "consolidated_metrics"; }
       input_directories: directories
       conpair_directory: put-conpair-files-into-directory/directory
       qc_merged_and_hotspots_directory: qc_merge_and_hotspots/qc_merged_directory
       generate_images_directory: generate_images/output
       files: files
       directories:
-        valueFrom: ${ var metrics_data = [inputs.qc_merged_and_hotspots_directory, inputs.generate_images_directory, inputs.conpair_directory ]; return metrics_data.concat(inputs.input_directories); }
+        valueFrom: ${ var metrics_data = [inputs.qc_merged_and_hotspots_directory, inputs.generate_images_directory, inputs.conpair_directory]; return metrics_data.concat(inputs.input_directories); }
     out: [ directory ]
+  consolidate_metrics:
+    run: ../../tools/consolidate-files/consolidate-files-mixed.cwl
+    in:
+      consolidated_metrics: consolidate_intermediate_files/directory
+      consolidated_results: consolidate_results/directory
+      output_directory_name:
+        valueFrom: ${ return "qc_metrics"; }
+      directories:
+        valueFrom: ${ return [inputs.consolidated_metrics, inputs.consolidated_results]}
+      flatten_directories:
+        valueFrom: ${ return false; }
+    out: [directory]
   generate_qc:
     run: ../../tools/roslin-qc/genlatex.cwl
     in:
