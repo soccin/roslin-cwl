@@ -3,4 +3,4 @@
 	url = https://github.com/mskcc/resolve-pdx
 [submodule "modules/pair/helix_filters_01"]
 	path = modules/pair/helix_filters_01
-	url = git@github.com:mskcc/helix_filters_01
+	url = https://github.com:mskcc/helix_filters_01
