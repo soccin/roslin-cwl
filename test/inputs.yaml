@@ -281,8 +281,8 @@ runparams:
   num_cpu_threads_per_data_thread: 6
   num_threads: 10
   opt_dup_pix_dist: '2500'
-  pi: soccin
-  pi_email: soccin@mskcc.org
+  pi: pi_name
+  pi_email: email@email.com
   project_prefix: ROSLIN_DEV
   scripts_bin: /usr/bin
   tmp_dir: /scratch
