@@ -15,8 +15,12 @@ requirements:
   DockerRequirement:
     dockerPull: mskcc/bwa_mem:0.7.12
 
+label: "run bwa mem -t 6 -M"
 doc: |
-  run bwa mem
+  bwa mem
+    args set:
+      -M
+      -t 6
 
 inputs:
 
@@ -49,6 +53,31 @@ inputs:
 
   output:
     type: string
+
+#
+# Non-default args used: -M -t 6
+#
+
+  M:
+    type: ['null', boolean]
+    default: true
+    doc: mark shorter split hits as secondary (for Picard/GATK compatibility)
+    inputBinding:
+      prefix: -M
+      position: 0
+
+  t:
+    type: ['null', string]
+    doc: INT number of threads [1]
+    inputBinding:
+      prefix: -t
+      position: 0
+    default: '6'
+
+#
+# Remaining arguments at default values unless
+# explicitly set
+#
 
   E:
     type: ['null', string]
@@ -93,13 +122,6 @@ inputs:
       prefix: -B
       position: 0
 
-  M:
-    type: ['null', boolean]
-    default: true
-    doc: mark shorter split hits as secondary (for Picard/GATK compatibility)
-    inputBinding:
-      prefix: -M
-      position: 0
 
   L:
     type: ['null', string]
@@ -136,13 +158,6 @@ inputs:
       prefix: -U
       position: 0
 
-  t:
-    type: ['null', string]
-    doc: INT number of threads [1]
-    inputBinding:
-      prefix: -t
-      position: 0
-    default: '6'
 
   w:
     type: ['null', string]
