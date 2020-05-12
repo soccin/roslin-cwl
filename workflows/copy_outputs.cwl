@@ -15,6 +15,9 @@ inputs:
   vcf: File[]
   bam: File[]
   maf: File[]
+  meta:
+    type: File[]
+    default: []
   facets:
     type:
       type: array
@@ -36,6 +39,9 @@ outputs:
   maf_dir:
     type: Directory
     outputSource: collect_maf/directory
+  meta_files:
+    type: File[]
+    outputSource: meta
   facets:
     type: Directory
     outputSource: collect_facets/directory
